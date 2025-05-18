@@ -7,13 +7,15 @@
     "npm": "10.0.9"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "express": "^5.1.0",
+    "nodemon": "^3.1.10",
     "passport": "^0.5.3",
     "passport-google-oauth20": "^2.0.0"
   }
