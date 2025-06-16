@@ -11,7 +11,7 @@ import reduxThunk from 'redux-thunk';
 const el = document.getElementById("root");
 
 
-const store = createStore (() => reducers, {}, applyMiddleware(reduxThunk));
+const store = createStore (reducers, {}, applyMiddleware(reduxThunk));
 
 const root = ReactDOM.createRoot(el);
 
