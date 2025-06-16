@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+
 class Header extends Component {
     renderContent() {
         switch (this.props.auth) {
@@ -10,7 +13,7 @@ class Header extends Component {
                     <li><a href="/auth/google">Login With Google</a></li>
                 );
             default:
-               return <li><a>Logout</a></li>
+               return <li><a href="/api/logout">Logout</a></li>
         }
     }
     render() {
@@ -18,7 +21,13 @@ class Header extends Component {
         return (
             <nav>
                 <div className="nav-wrapper">
-                    <a href="/" className="brand-logo left">Emaily</a>
+                    <Link 
+                        to={
+                            this.props.auth ? '/surveys' : '/'
+                        } 
+                        className="brand-logo left">
+                            Emaily
+                    </Link>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
                         {this.renderContent()}
                     </ul>
