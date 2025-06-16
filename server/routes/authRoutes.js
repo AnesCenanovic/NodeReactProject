@@ -10,7 +10,11 @@ module.exports = (app) =>{
 
     app.get(
         '/auth/google/callback', 
-        passport.authenticate('google')
+        passport.authenticate('google'),
+        (req, res) => {
+            // Successful authentication, redirect home.
+            res.redirect('/surveys'); // Redirect to the home page after login
+        }
     );
 
     app.get('/api/logout', (req, res) => {
