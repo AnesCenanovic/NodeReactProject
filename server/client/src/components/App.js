@@ -1,13 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-const Header = () => {
-    return (
-        <h2>
-            Header
-        </h2>
-    );
-};
+import Header from './Header';
 
 const Dashboard = () => {
     return (
@@ -35,7 +29,7 @@ const Landing= () => {
 
 const App = () => {
     return (
-        <div>
+        <div className="container">
             <BrowserRouter>
                 <div>
                     <Header />
