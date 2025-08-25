@@ -19,6 +19,7 @@
     "concurrently": "^9.1.2",
     "cookie-session": "^2.1.0",
     "express": "^5.1.0",
+    "materialize-css": "^1.0.0",
     "mongoose": "^8.15.0",
     "nodemon": "^3.1.10",
     "passport": "^0.5.3",
