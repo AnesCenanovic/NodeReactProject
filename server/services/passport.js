@@ -35,7 +35,7 @@ passport.use(
           googleId: profile.id,
           name: profile.displayName,
           email: profile.emails[0].value,
-          role: 'user',
+          role: 'parent',
         }).save();
         done(null, user);
     })

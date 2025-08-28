@@ -1,0 +1,12 @@
+import { FETCH_USERS } from '../actions/types';
+
+export default function usersReducer(state = [], action) {
+     console.log('usersReducer received an action:', action); 
+    switch (action.type) {
+        case FETCH_USERS:
+             console.log('FETCH_USERS payload:', action.payload);
+            return action.payload;
+        default:
+            return state;
+    }
+}

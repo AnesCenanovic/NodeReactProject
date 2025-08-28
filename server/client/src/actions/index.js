@@ -1,11 +1,19 @@
 import axios from 'axios';
-import { FETCH_USER } from './types';
-import { UPDATE_USER_ROLE } from './types';
+import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS } from './types';
+
+export const fetchUsers = () => async dispatch => {
+        const res = await axios.get('/api/users');
+        console.log('fetchUsers response:', res.data);
+        const action = { type: FETCH_USERS, payload: res.data }; 
+        console.log('Dispatching action:', action); 
+
+        dispatch(action);
+};
 
 export const fetchUser = () => async dispatch => {
         const res = await axios.get('/api/current_user');
         dispatch({ type: FETCH_USER, payload: res.data });
-    };
+};
     
 export const updateUserRole = (role) => async dispatch => {
     try {

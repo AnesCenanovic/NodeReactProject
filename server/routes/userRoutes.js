@@ -14,4 +14,11 @@ module.exports = app => {
         await req.user.save();
         res.send(req.user);
     });
+    app.get('/api/users', async (req, res) => {
+        if (!req.user) {
+            return res.status(403).send({ error: 'Access denied' });
+        }
+        const users = await User.find({}, 'name email role'); // Fetch only name, email, and role
+        res.send(users);
+    });
 };

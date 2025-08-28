@@ -4,24 +4,13 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Landing from './Landing';
 import Profile from './Profile';
-
 import Header from './Header';
+import Sidebar from './Sidebar'; // Import Sidebar
+import Dashboard from './Dashboard'; // Import Dashboard
 
-const Dashboard = () => {
-    return (
-        <h2>
-            Dashboard
-        </h2>
-    );
-};
-
-const SurveyNew = () => {
-    return (
-        <h2>
-            SurveyNew
-        </h2>
-    );
-};
+const SurveyNew = () => (
+    <h2>SurveyNew</h2>
+);
 
 class App extends Component {
     componentDidMount() {
@@ -29,19 +18,20 @@ class App extends Component {
     }
     render() {
         return (
-            <div className="container">
-                <BrowserRouter>
-                    <div>
-                        <Header />
+            <BrowserRouter>
+                <div>
+                    <Header />
+                    <Sidebar /> {/* Always render Sidebar */}
+                    <div className="container" style={{ marginRight: 250 }}>
                         <Route exact path="/" component={Landing} />
                         <Route exact path="/surveys" component={Dashboard} />
                         <Route path="/surveys/new" component={SurveyNew} />
                         <Route path="/profile" component={Profile} />
                     </div>
-                </BrowserRouter>
-            </div>
+                </div>
+            </BrowserRouter>
         );
     }
-};
+}
 
 export default connect(null, actions)(App);
