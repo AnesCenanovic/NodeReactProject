@@ -28,13 +28,14 @@ class Header extends Component {
     render() {
         console.log('Header is rendering with auth:', this.props.auth);
         return (
-            <nav>
+            <nav className="blue-grey darken-1">
                 <div className="nav-wrapper">
                     <Link 
                         to={
                             this.props.auth ? '/surveys' : '/'
                         } 
-                        className="brand-logo left">
+                        className="brand-logo left"
+                        style={{ marginLeft: '10px' }}>
                             Emaily
                     </Link>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">

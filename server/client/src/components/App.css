@@ -1,0 +1,23 @@
+/* src/App.css */
+
+/* This creates the main side-by-side layout for our dashboard */
+.dashboard-container {
+    display: flex; /* Arranges children (main content and sidebar) horizontally */
+    align-items: flex-start; /* Aligns items to the top */
+    gap: 20px; /* Creates a 20px space between the content and the sidebar */
+}
+
+/* This tells the main content area to take up all available empty space */
+.main-content {
+    flex-grow: 1; 
+}
+
+/* This is the styling for the sidebar itself */
+.sidebar {
+    width: 300px; /* Gives the sidebar a consistent width */
+    flex-shrink: 0; /* Prevents it from getting squished on smaller screens */
+    
+    /* This makes the sidebar "stick" to the top when you scroll past it */
+    position: sticky;
+    top: 20px; /* Adjust this value to change how far from the top it sticks */
+}

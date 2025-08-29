@@ -8,6 +8,8 @@ import Header from './Header';
 import Sidebar from './Sidebar'; // Import Sidebar
 import Dashboard from './Dashboard'; // Import Dashboard
 
+import './App.css';
+
 const SurveyNew = () => (
     <h2>SurveyNew</h2>
 );
@@ -21,7 +23,6 @@ class App extends Component {
             <BrowserRouter>
                 <div>
                     <Header />
-                    <Sidebar /> {/* Always render Sidebar */}
                     <div className="container" style={{ marginRight: 250 }}>
                         <Route exact path="/" component={Landing} />
                         <Route exact path="/surveys" component={Dashboard} />

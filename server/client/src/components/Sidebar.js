@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchUsers } from '../actions';
+import UserCard from './UserCard';
 
 
 
@@ -25,11 +26,7 @@ const Sidebar = (props) => {
             return <div>Loading users...</div>;
         }
         return users.map(user => {
-            return (
-                <li key={user._id}>
-                    <a href={`/profile/${user._id}`}>{user.name}</a>
-                </li>
-            );
+            return <UserCard key={user._id} user={user} />;
         });
     };
 
@@ -38,7 +35,7 @@ const Sidebar = (props) => {
     }
 
     return (
-        <div>
+        <div className='sidebar'>
             <h5>Other Users</h5>
             <ul>
                 {renderUserList()}
