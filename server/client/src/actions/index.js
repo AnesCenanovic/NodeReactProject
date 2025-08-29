@@ -2,12 +2,10 @@ import axios from 'axios';
 import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS } from './types';
 
 export const fetchUsers = () => async dispatch => {
-        const res = await axios.get('/api/users');
-        console.log('fetchUsers response:', res.data);
-        const action = { type: FETCH_USERS, payload: res.data }; 
-        console.log('Dispatching action:', action); 
-
-        dispatch(action);
+    const res = await axios.get('/api/users');
+    
+    // This sends the action object to all reducers
+    dispatch({ type: FETCH_USERS, payload: res.data });
 };
 
 export const fetchUser = () => async dispatch => {
