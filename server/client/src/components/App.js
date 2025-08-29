@@ -8,6 +8,7 @@ import Header from './Header';
 import Dashboard from './Dashboard';
 import PostCreate from './PostCreate'; 
 import PostDetail from './PostDetail';
+import ForumCreate from './ForumCreate';
 
 import './App.css';
 
@@ -30,7 +31,8 @@ class App extends Component {
                         <Route path="/surveys/new" component={SurveyNew} />
                         <Route path="/profile" component={Profile} />
                         <Route path="/posts/new" component={PostCreate} />
-                        <Route exact path="/posts/:postId" component={PostDetail} /> 
+                        <Route exact path="/posts/:postId" component={PostDetail} />
+                        <Route exact path="/forums/new" component={ForumCreate} />
                     </div>
                 </div>
             </BrowserRouter>

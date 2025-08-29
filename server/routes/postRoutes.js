@@ -30,7 +30,6 @@ module.exports = app => {
             res.status(422).send(err);
         }
     });
-    // Route to get a specific post by ID
     app.get('/api/posts/:postId', async (req, res) => {
         try {
             const post = await Post.findOne({ _id: req.params.postId });

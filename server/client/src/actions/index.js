@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS, FETCH_POSTS, CREATE_POST } from './types';
+import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS, FETCH_POSTS, CREATE_POST, FETCH_FORUMS, CREATE_FORUM } from './types';
 
 export const fetchUsers = () => async dispatch => {
     try {
@@ -10,6 +10,7 @@ export const fetchUsers = () => async dispatch => {
         console.error('ERROR in fetchUsers:', error.response.data);
     }
 };
+
 
 export const fetchUser = () => async dispatch => {
         const res = await axios.get('/api/current_user');
@@ -42,4 +43,23 @@ export const createPost = (values, history) => async dispatch => {
     const res = await axios.post('/api/posts', values);
     history.push('/surveys'); 
     dispatch({ type: CREATE_POST, payload: res.data }); 
+};
+
+export const fetchForums = () => async dispatch => {
+    try {
+        const res = await axios.get('/api/forums');
+        dispatch({ type: FETCH_FORUMS, payload: res.data });
+    } catch (error) {
+        console.error("Error fetching forums:", error);
+    }
+};
+
+export const createForum = (values, history) => async dispatch => {
+    try {
+        await axios.post('/api/forums', values);
+        history.push('/surveys'); 
+
+    } catch (error) {
+        console.error("Error creating forum:", error);
+    }
 };
