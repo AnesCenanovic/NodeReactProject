@@ -2,7 +2,9 @@
 
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchUsers } from '../actions'; // <-- Import the action creator
+import { fetchUsers } from '../actions';
+
+
 
 const Sidebar = (props) => {
     // Destructure what we need from props
