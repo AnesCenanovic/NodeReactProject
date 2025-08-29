@@ -28,7 +28,7 @@ class Header extends Component {
     render() {
         console.log('Header is rendering with auth:', this.props.auth);
         return (
-            <nav className="blue-grey darken-1">
+            <nav className="custom-header">
                 <div className="nav-wrapper">
                     <Link 
                         to={

@@ -2,16 +2,24 @@
 
 /* This creates the main side-by-side layout for our dashboard */
 .dashboard-container {
-    display: grid; /* Use CSS Grid for more complex layouts */
-    /* Defines three columns: a 250px left sidebar, a flexible main area, and a 300px right sidebar */
-    grid-template-columns: 250px 1fr 300px; 
-    gap: 20px; /* Space between columns */
+    display: grid;
+    grid-template-columns: minmax(180px, 200px) 1fr minmax(200px, 250px);
+    gap: 30px; 
     align-items: flex-start;
+    padding: 20px 0; 
 }
 
 /* This tells the main content area to take up all available empty space */
 .main-content {
     flex-grow: 1; 
+}
+
+body {
+    background-color: #121212; 
+    background-image: url('C:\Users\Clancy\Documents\GitHub\NodeReactProject\server\client\public\background.jpg'); 
+    background-size: cover;
+    background-attachment: fixed; 
+    color: #f0f0f0; 
 }
 
 /* This is the styling for the sidebar itself */
@@ -22,4 +30,46 @@
     /* This makes the sidebar "stick" to the top when you scroll past it */
     position: sticky;
     top: 20px; /* Adjust this value to change how far from the top it sticks */
+}
+
+.custom-card {
+    /* "Frosted Glass" effect */
+    background: rgba(255, 255, 255, 0.05); /* Very transparent white */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+    border-radius: 10px; /* Softer corners */
+    margin-bottom: 20px;
+    color: #f0f0f0; /* Ensure text is light */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.custom-card .card-content {
+    padding: 24px;
+}
+
+.custom-card .card-title {
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.custom-card .card-action {
+    background-color: transparent !important; /* Override Materialize's default */
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 16px 24px;
+}
+
+.custom-card .card-action a {
+    color: #03a9f4 !important; /* A nice bright blue for links */
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 20px;
+}
+
+nav.custom-header {
+    background: rgba(20, 20, 20, 0.5) !important; /* Semi-transparent dark background */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: none !important; /* Remove the default shadow */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }

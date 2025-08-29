@@ -8,7 +8,7 @@ const UserCard = ({ user }) => {
     return (
         // These `className` values are all from the Materialize CSS framework.
         // This is the standard way to create a styled card.
-        <div className="card blue-grey darken-1" style={{ marginBottom: '20px' }}>
+        <div className="custom-card">
             
             <div className="card-content white-text">
                 {/* The user's name will be the title of the card */}
