@@ -5,8 +5,9 @@ import * as actions from '../actions';
 import Landing from './Landing';
 import Profile from './Profile';
 import Header from './Header';
-import Sidebar from './Sidebar'; // Import Sidebar
-import Dashboard from './Dashboard'; // Import Dashboard
+import Dashboard from './Dashboard';
+import PostCreate from './PostCreate'; 
+import PostDetail from './PostDetail';
 
 import './App.css';
 
@@ -28,6 +29,8 @@ class App extends Component {
                         <Route exact path="/surveys" component={Dashboard} />
                         <Route path="/surveys/new" component={SurveyNew} />
                         <Route path="/profile" component={Profile} />
+                        <Route path="/posts/new" component={PostCreate} />
+                        <Route exact path="/posts/:postId" component={PostDetail} /> 
                     </div>
                 </div>
             </BrowserRouter>

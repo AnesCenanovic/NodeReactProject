@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS } from './types';
+import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS, FETCH_POSTS, CREATE_POST } from './types';
 
 export const fetchUsers = () => async dispatch => {
     try {
@@ -32,3 +32,14 @@ export const updateUserRole = (role) => async dispatch => {
         return { success: false, error: err };
     }
 }
+
+export const fetchPosts = () => async dispatch => {
+    const res = await axios.get('/api/posts');
+    dispatch({ type: FETCH_POSTS, payload: res.data });
+};
+
+export const createPost = (values, history) => async dispatch => {
+    const res = await axios.post('/api/posts', values);
+    history.push('/surveys'); 
+    dispatch({ type: CREATE_POST, payload: res.data }); 
+};
