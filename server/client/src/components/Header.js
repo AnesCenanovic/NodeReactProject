@@ -18,6 +18,7 @@ class Header extends Component {
                         <li>
                             <Link to="/profile">Profile</Link>
                         </li>
+                        <li><Link to="/specialists">Specialists</Link></li>
                         <li>
                             <a href="/api/logout">Logout</a>
                         </li>

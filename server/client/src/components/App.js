@@ -9,6 +9,9 @@ import Dashboard from './Dashboard';
 import PostCreate from './PostCreate'; 
 import PostDetail from './PostDetail';
 import ForumCreate from './ForumCreate';
+import SpecialistsPage from './SpecialistsPage';
+import SpecialistDetailPage from './SpecialistDetailPage';
+import SpecialistCreate from './SpecialistCreate';
 
 import './App.css';
 
@@ -33,7 +36,10 @@ class App extends Component {
                         <Route path="/posts/new" component={PostCreate} />
                         <Route exact path="/posts/:postId" component={PostDetail} />
                         <Route exact path="/forums/new" component={ForumCreate} />
-                    </div>
+                        <Route exact path="/specialists" component={SpecialistsPage} />
+                        <Route exact path="/specialists/:id" component={SpecialistDetailPage} />
+                        <Route exact path="/admin/specialists/new" component={SpecialistCreate} />
+                        </div>
                 </div>
             </BrowserRouter>
         );

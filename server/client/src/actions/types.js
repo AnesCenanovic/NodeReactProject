@@ -5,3 +5,6 @@ export const FETCH_POSTS = 'fetch_posts';
 export const CREATE_POST = 'create_post';
 export const FETCH_FORUMS = 'fetch_forums';
 export const CREATE_FORUM = 'create_forum';
+export const FETCH_SPECIALISTS = 'fetch_specialists';
+export const FETCH_SPECIALIST = 'fetch_specialist';
+export const CREATE_SPECIALIST = 'create_specialist';

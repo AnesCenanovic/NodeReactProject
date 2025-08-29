@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS, FETCH_POSTS, CREATE_POST, FETCH_FORUMS, CREATE_FORUM } from './types';
+import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS, FETCH_POSTS, CREATE_POST, FETCH_FORUMS, CREATE_FORUM, FETCH_SPECIALISTS, CREATE_SPECIALIST } from './types';
 
 export const fetchUsers = () => async dispatch => {
     try {
@@ -61,5 +61,25 @@ export const createForum = (values, history) => async dispatch => {
 
     } catch (error) {
         console.error("Error creating forum:", error);
+    }
+};
+
+export const fetchSpecialists = () => async dispatch => {
+    try {
+        const res = await axios.get('/api/specialists');
+        dispatch({ type: FETCH_SPECIALISTS, payload: res.data });
+    } catch (error) {
+        console.error("Error fetching specialists:", error);
+    }
+};
+
+
+export const createSpecialist = (values, history) => async dispatch => {
+    try {
+        await axios.post('/api/specialists', values);
+        
+        history.push('/specialists');
+    } catch (error) {
+        console.error("Error creating specialist:", error);
     }
 };
