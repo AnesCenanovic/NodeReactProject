@@ -55,13 +55,22 @@ const ForumDetailPage = () => {
         <div>
             <div className="card blue-grey darken-1 white-text" style={{ marginTop: '30px' }}>
                 <div className="card-content">
-                    <span className="card-title">{forum.title}</span>
+                    <span className="card-title">
+                        <i className="material-icons left">{renderIcon(forum.type)}</i>
+                        {forum.title}
+                    </span>
+
                     <p><strong>Type:</strong> {forum.type}</p>
+
+                    {forum.eventDate && (
+                        <p><strong>When:</strong> {new Date(forum.eventDate).toLocaleString()}</p>
+                    )}
+
                     <p style={{ marginTop: '20px', whiteSpace: 'pre-wrap' }}>{forum.description}</p>
                 </div>
                 <div className="card-action">
                     {forum.links && forum.links.map((link, index) => {
-                        const fullLink = link.startsWith('http') ? link : `https://${link}`;
+                        const fullLink = link.startsWith('http') ? link : `https://$\{link}`;
                         return (
                             <a key={index} href={fullLink} target="_blank" rel="noopener noreferrer">
                                 Link {index + 1}
@@ -69,13 +78,6 @@ const ForumDetailPage = () => {
                         );
                     })}
                 </div>
-                <span className="card-title">
-                    <i className="material-icons left">{renderIcon(forum.type)}</i>
-                    {forum.title}
-                </span>
-                    <p><strong>Type:</strong> {forum.type}</p>
-                        <p><strong>When:</strong> {new Date(forum.eventDate).toLocaleString()}</p>
-                    <p style={{ marginTop: '20px' }}>{forum.description}</p>
             </div>
             {renderParticipants()}
         </div>
