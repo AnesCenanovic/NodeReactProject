@@ -44,7 +44,7 @@ const UserCard = ({ user }) => {
                 </div>
 
             </div>
-            <div className="card-action" style={{ padding: '10px 15px' }}> {/* Reduced padding */}
+            <div className="card-action" style={{ padding: '10px 15px' }}>
                 <Link to={`/profile/${user._id}`}>View Profile</Link>
             </div>
         </div>

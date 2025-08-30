@@ -34,7 +34,7 @@ render() {
                             <Route exact path="/" component={Landing} />
                             <Route exact path="/surveys" component={Dashboard} />
                             <Route path="/surveys/new" component={SurveyNew} />
-                            <Route path="/profile" component={Profile} />
+                            <Route path="/profile/:userId?" component={Profile} />
                             <Route path="/posts/new" component={PostCreate} />
                             <Route exact path="/posts/:postId" component={PostDetail} />
                             <Route exact path="/forums/new" component={ForumCreate} />

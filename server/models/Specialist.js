@@ -9,6 +9,8 @@ const specialistSchema = new Schema({
     fullBio: String, 
     contactEmail: String,
     contactPhone: String,
+    website: String,
+    address: String,
     createdAt: { type: Date, default: Date.now }
 });
 

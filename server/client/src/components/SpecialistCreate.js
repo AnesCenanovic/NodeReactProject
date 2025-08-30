@@ -11,12 +11,14 @@ const SpecialistCreate = (props) => {
     const [fullBio, setFullBio] = useState('');
     const [contactEmail, setContactEmail] = useState('');
     const [contactPhone, setContactPhone] = useState('');
+    const [website, setWebsite] = useState('');
+    const [address, setAddress] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         
         const newSpecialist = {
-            name, specialty, shortBio, fullBio, contactEmail, contactPhone
+            name, specialty, shortBio, fullBio, contactEmail, contactPhone,  website, address
         };
 
         try {
@@ -65,6 +67,14 @@ const SpecialistCreate = (props) => {
                     <label htmlFor="contactPhone">Contact Phone</label>
                 </div>
 
+                <div className="input-field">
+                    <input id="website" type="text" value={website} onChange={e => setWebsite(e.target.value)} />
+                    <label htmlFor="website">Website URL</label>
+                </div>
+                <div className="input-field">
+                    <input id="address" type="text" value={address} onChange={e => setAddress(e.target.value)} />
+                    <label htmlFor="address">Address</label>
+                </div>
                 <button type="submit" className="btn green right">
                     Save Specialist
                 </button>

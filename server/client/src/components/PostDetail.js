@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { getIconForPost } from '../utils/iconHelper';
 
 const PostDetail = () => {
     const { postId } = useParams(); 
@@ -35,7 +36,10 @@ const PostDetail = () => {
     return (
         <div className="card blue-grey darken-1" style={{ marginTop: '30px' }}>
             <div className="card-content white-text">
-                <span className="card-title">{post.title}</span>
+                                <span className="card-title">
+                    <i className="material-icons left">{getIconForPost(post._id)}</i>
+                    {post.title}
+                </span>
                 <p style={{ whiteSpace: 'pre-wrap' }}>{post.content}</p>
                 <p className="right">
                     Posted By: {post.authorName} on {new Date(post.createdAt).toLocaleDateString()}

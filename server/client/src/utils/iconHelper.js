@@ -10,3 +10,25 @@ export const getIconForRole = (role) => {
             return 'person'; //  default 
     }
 };
+
+export const getIconForPost = (postId) => {
+    const postIcons = ['article', 'comment', 'speaker_notes', 'lightbulb', 'assessment'];
+    if (!postId || postId.length === 0) return postIcons[0]; // Default icon if no ID
+    const lastChar = postId.slice(-1);
+    const index = parseInt(lastChar, 16) % postIcons.length; 
+
+    return postIcons[index];
+};
+
+export const getIconForSpecialty = (specialty) => {
+    const lowerCaseSpecialty = specialty.toLowerCase();
+
+    if (lowerCaseSpecialty.includes('therapist')) {
+        return 'psychology'; 
+    }
+    if (lowerCaseSpecialty.includes('logoped')) {
+        return 'record_voice_over'; 
+    }
+    
+    return 'star';
+};

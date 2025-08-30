@@ -8,6 +8,7 @@ require('./models/Post');
 require('./models/Forum');
 require('./services/passport');
 require('./models/Specialist');
+require('./models/Review');
 
 mongoose.connect(keys.mongoURI);
 

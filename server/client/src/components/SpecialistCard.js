@@ -1,16 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { getIconForSpecialty } from '../utils/iconHelper'; 
 
 const SpecialistCard = ({ specialist }) => {
     return (
-        <div className="card">
-            <div className="card-image">
-                <img src={specialist.profilePictureUrl} alt={specialist.name} style={{ height: '250px', objectFit: 'cover' }} />
-                <span className="card-title">{specialist.name}</span>
-            </div>
-            <div className="card-content">
+        <div className="card blue-grey darken-1 white-text">
+            <div className="card-content center-align">
+                <i className="material-icons" style={{ fontSize: '80px', margin: '20px 0' }}>
+                    {getIconForSpecialty(specialist.specialty)}
+                </i>
+                <span className="card-title" style={{ display: 'block', fontWeight: 'bold' }}>{specialist.name}</span>
                 <p><strong>{specialist.specialty}</strong></p>
-                <p>{specialist.shortBio}</p>
+                <p style={{ marginTop: '10px' }}>{specialist.shortBio}</p>
             </div>
             <div className="card-action">
                 <Link to={`/specialists/${specialist._id}`}>View Full Profile</Link>
@@ -18,5 +19,4 @@ const SpecialistCard = ({ specialist }) => {
         </div>
     );
 };
-
 export default SpecialistCard;

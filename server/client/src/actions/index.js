@@ -83,3 +83,14 @@ export const createSpecialist = (values, history) => async dispatch => {
         console.error("Error creating specialist:", error);
     }
 };
+
+export const updateUserRoleAdmin = (userId, role) => async dispatch => {
+    try {
+
+        const res = await axios.post(`/api/users/${userId}/role`, { role });
+        return { success: true, data: res.data };
+    } catch (err) {
+        console.error("Error updating user role (admin):", err);
+        return { success: false };
+    }
+};
