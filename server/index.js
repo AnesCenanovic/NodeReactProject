@@ -7,6 +7,7 @@ require('./models/User');
 require('./models/Post'); 
 require('./models/Forum');
 require('./services/passport');
+require('./models/Specialist');
 
 mongoose.connect(keys.mongoURI);
 
@@ -27,6 +28,7 @@ require('./routes/authRoutes')(app);
 require('./routes/userRoutes')(app); 
 require('./routes/postRoutes.js')(app);
 require('./routes/forumRoutes')(app);
+require('./routes/specialistRoutes')(app);
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT);

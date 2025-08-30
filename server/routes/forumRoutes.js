@@ -12,10 +12,10 @@ module.exports = app => {
     });
 
     app.post('/api/forums', requireLogin, async (req, res) => {
-        const { title, description, type, links, invitedEmails } = req.body;
+        const { title, description, type, links, memberIds } = req.body;
 
-        const invitedUsers = await User.find({ email: { $in: invitedEmails } });
-        const memberIds = invitedUsers.map(user => user.id);
+        const finalMemberIds = new Set(memberIds); 
+        finalMemberIds.add(req.user.id);
 
         if (!memberIds.includes(req.user.id)) {
             memberIds.push(req.user.id);
@@ -27,13 +27,28 @@ module.exports = app => {
             type,
             links: links ? links.split(',').map(link => link.trim()) : [],
             _creator: req.user.id,
-            members: memberIds,
+            members: Array.from(finalMemberIds),
             createdAt: Date.now()
         });
 
         try {
             await forum.save();
             res.send(forum);
+        } catch (err) {
+            res.status(422).send(err);
+        }
+    });
+
+    app.get('/api/forums/:id', requireLogin, async (req, res) => {
+        try {
+            const forum = await Forum.findById(req.params.id)
+                .populate('members', 'name email role profilePictureUrl'); 
+
+            if (forum) {
+                res.send(forum);
+            } else {
+                res.status(404).send({ error: 'Forum not found' });
+            }
         } catch (err) {
             res.status(422).send(err);
         }

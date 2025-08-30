@@ -1,39 +1,47 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { fetchForums } from '../actions'; // We need the fetchForums action
+import { Link } from 'react-router-dom'; // <-- Make sure Link is imported
+import { fetchForums } from '../actions';
 
 const ForumList = ({ forums, fetchForums }) => {
-    // When the component mounts, call the action to fetch the forums
     useEffect(() => {
         fetchForums();
     }, [fetchForums]);
 
-    // A helper function to render the list of forums
+    // --- 1. HELPER FUNCTION FOR ICONS ---
+    const renderIcon = (type) => {
+        switch (type) {
+            case 'workshop':
+                return 'group'; // Materialize icon name for a group
+            case 'event':
+                return 'event'; // Icon for an event
+            case 'seminar':
+                return 'school'; // Icon for learning/school
+            default:
+                return 'forum';
+        }
+    };
+
     const renderForums = () => {
-        // Show a loading message if the forums haven't arrived yet
         if (!forums || forums.length === 0) {
             return (
                 <div className="center-align">
                     <h5>No forums to display.</h5>
-                    <p>Create a new forum to get started!</p>
                 </div>
             );
         }
         
-        // Map over the forums and render a card for each one
         return forums.map(forum => (
             <div className="card blue-grey darken-1" key={forum._id}>
                 <div className="card-content white-text">
-                    <span className="card-title">{forum.title}</span>
-                    <p><strong>Type:</strong> {forum.type}</p>
+                    <span className="card-title">
+                        <i className="material-icons left">{renderIcon(forum.type)}</i>
+                        {forum.type.toUpperCase()}: {forum.title}
+                    </span>
                     <p>{forum.description}</p>
                 </div>
                 <div className="card-action">
-                    {/* In the future, this could link to a detailed forum page */}
-                    <a href="#">Enter Forum</a>
-                    {forum.links && forum.links.map((link, index) => (
-                         <a key={index} href={link} target="_blank" rel="noopener noreferrer">Link {index + 1}</a>
-                    ))}
+                    <Link to={`/forums/${forum._id}`}>Details</Link>
                 </div>
             </div>
         ));
@@ -41,16 +49,14 @@ const ForumList = ({ forums, fetchForums }) => {
 
     return (
         <div>
-            <h4 className="center-align">Your Collaborative Forums</h4>
+            <h4 className="center-align">Current Forums</h4>
             {renderForums()}
         </div>
     );
 };
 
-// Connect this component to the 'forums' piece of the Redux state
 const mapStateToProps = ({ forums }) => {
     return { forums };
 };
 
-// Connect the component to the `fetchForums` action creator
 export default connect(mapStateToProps, { fetchForums })(ForumList);

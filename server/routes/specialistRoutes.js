@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const requireLogin = require('../middlewares/requireLogin');
-const requireAdmin = require('../middlewares/requireAdmin'); 
+const requireLogin = require('../services/requireLogin');
+const requireAdmin = require('../services/requireAdmin'); 
 
 const Specialist = mongoose.model('specialists');
 

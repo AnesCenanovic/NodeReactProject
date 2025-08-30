@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import Landing from './Landing';
@@ -12,6 +12,7 @@ import ForumCreate from './ForumCreate';
 import SpecialistsPage from './SpecialistsPage';
 import SpecialistDetailPage from './SpecialistDetailPage';
 import SpecialistCreate from './SpecialistCreate';
+import ForumDetailPage from './ForumDetailsPage';
 
 import './App.css';
 
@@ -23,23 +24,26 @@ class App extends Component {
     componentDidMount() {
         this.props.fetchUser();
     }
-    render() {
+render() {
         return (
             <BrowserRouter>
                 <div>
                     <Header />
                     <div className="container" style={{ marginRight: 250 }}>
-                        <Route exact path="/" component={Landing} />
-                        <Route exact path="/surveys" component={Dashboard} />
-                        <Route path="/surveys/new" component={SurveyNew} />
-                        <Route path="/profile" component={Profile} />
-                        <Route path="/posts/new" component={PostCreate} />
-                        <Route exact path="/posts/:postId" component={PostDetail} />
-                        <Route exact path="/forums/new" component={ForumCreate} />
-                        <Route exact path="/specialists" component={SpecialistsPage} />
-                        <Route exact path="/specialists/:id" component={SpecialistDetailPage} />
-                        <Route exact path="/admin/specialists/new" component={SpecialistCreate} />
-                        </div>
+                        <Switch>
+                            <Route exact path="/" component={Landing} />
+                            <Route exact path="/surveys" component={Dashboard} />
+                            <Route path="/surveys/new" component={SurveyNew} />
+                            <Route path="/profile" component={Profile} />
+                            <Route path="/posts/new" component={PostCreate} />
+                            <Route exact path="/posts/:postId" component={PostDetail} />
+                            <Route exact path="/forums/new" component={ForumCreate} />
+                            <Route exact path="/specialists" component={SpecialistsPage} />
+                            <Route exact path="/specialists/:id" component={SpecialistDetailPage} />
+                            <Route exact path="/admin/specialists/new" component={SpecialistCreate} />
+                            <Route exact path="/forums/:id" component={ForumDetailPage} />
+                        </Switch>
+                    </div>
                 </div>
             </BrowserRouter>
         );
