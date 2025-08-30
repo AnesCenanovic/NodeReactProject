@@ -13,7 +13,8 @@ const ForumCreate = (props) => {
     const [description, setDescription] = useState('');
     const [type, setType] = useState('workshop');
     const [links, setLinks] = useState('');
-    const [memberIds, setMemberIds] = useState([]); 
+    const [memberIds, setMemberIds] = useState([]);
+    const [eventDate, setEventDate] = useState('');
 
     const handleCheckboxChange = (userId) => {
         setMemberIds(prevIds => 
@@ -25,7 +26,7 @@ const ForumCreate = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        props.createForum({ title, description, type, links, memberIds }, props.history);
+        props.createForum({ title, description, type, links, memberIds, eventDate }, props.history);
     };
 
     const renderUserSelection = () => {
@@ -74,6 +75,11 @@ const ForumCreate = (props) => {
                     <textarea id="description" className="materialize-textarea" value={description} onChange={e => setDescription(e.target.value)}></textarea>
                     <label htmlFor="description">Description</label>
                 </div>
+
+                <div className="input-field">
+                <input id="eventDate" type="datetime-local" value={eventDate} onChange={e => setEventDate(e.target.value)} />
+                <label htmlFor="eventDate" className="active">Event Date & Time</label>
+                </div>``
                 
                 <div className="input-field">
                     <select className="browser-default" value={type} onChange={e => setType(e.target.value)} style={{ marginTop: '10px' }}>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'; // <-- Make sure Link is imported
+import { Link } from 'react-router-dom'; 
 import { fetchForums } from '../actions';
 
 const ForumList = ({ forums, fetchForums }) => {

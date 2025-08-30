@@ -7,7 +7,7 @@ const forumSchema = new Schema({
     // Use an enum to restrict the type to specific values
     type: { type: String, enum: ['workshop', 'event', 'seminar'], default: 'workshop' },
     links: [String],
-    // The user who created the forum
+     eventDate: Date,
     _creator: { type: Schema.Types.ObjectId, ref: 'users' },
     // The list of all members, including the creator
     members: [{ type: Schema.Types.ObjectId, ref: 'users' }],
