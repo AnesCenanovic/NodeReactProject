@@ -13,7 +13,7 @@ const getIconForForumType = (type) => {
 };
 
 const ForumCard = ({ forum }) => (
-    <div className="card blue-grey darken-1" key={forum._id}>
+    <div className="themed-card" key={forum._id}>
         <div className="card-content white-text">
             <span className="card-title">
                 <i className="material-icons left">{getIconForForumType(forum.type)}</i>

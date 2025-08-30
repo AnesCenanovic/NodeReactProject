@@ -1,57 +1,56 @@
-// src/components/Sidebar.js
-
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react'; // <-- 1. Import useState
 import { connect } from 'react-redux';
 import { fetchUsers } from '../actions';
 import UserCard from './UserCard';
+import UserFilter from './UserFilter'; // <-- 2. Import the filter component
 
-
-
-const Sidebar = (props) => {
-    // Destructure what we need from props
-    const { auth, users, fetchUsers } = props;
-
-    // This hook runs once when the component mounts
+const Sidebar = ({ users, fetchUsers }) => {
     useEffect(() => {
-        // Only fetch users if we are logged in
-        if (auth) {
-            console.log('Sidebar.js: Calling fetchUsers()');
-            fetchUsers();
-        }
-    }, [auth, fetchUsers]); // Dependency array ensures this runs when `auth` is available
+        fetchUsers();
+    }, [fetchUsers]);
 
-    // Render logic
-    const renderUserList = () => {
-        if (!users || users.length === 0) {
-            return <div>Loading users...</div>;
-        }
-        return users.map(user => {
-            return <UserCard key={user._id} user={user} />;
-        });
-    };
+    // --- 3. ADD LOCAL STATE FOR FILTERS ---
+    const [searchTerm, setSearchTerm] = useState('');
+    const [roleFilter, setRoleFilter] = useState('all'); // 'all' is the default
 
-    if (!auth) {
-        return <div>Please log in.</div>; // Or render nothing
-    }
+    // --- 4. THE FILTERING LOGIC ---
+    // We apply the filters before we map and render the cards.
+    const filteredUsers = users.filter(user => {
+        // Role filter logic
+        const matchesRole = roleFilter === 'all' || user.role === roleFilter;
+
+        // Search term logic (case-insensitive)
+        const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase());
+        
+        // A user is shown only if they match BOTH the role and search filters
+        return matchesRole && matchesSearch;
+    });
+
 
     return (
-        <div className='sidebar'>
-            <h5>Other Users</h5>
-            <ul>
-                {renderUserList()}
-            </ul>
+        <div>
+            {/* --- 5. RENDER THE FILTER CONTROLS --- */}
+            {/* We pass the state and the functions to change the state down as props */}
+            <UserFilter 
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+                roleFilter={roleFilter}
+                onRoleChange={setRoleFilter}
+            />
+            
+            {/* --- 6. MAP OVER THE FILTERED ARRAY --- */}
+            {/* Instead of mapping over `users`, we map over `filteredUsers` */}
+            {filteredUsers.length > 0 ? (
+                filteredUsers.map(user => <UserCard key={user._id} user={user} />)
+            ) : (
+                <p style={{ textAlign: 'center' }}>No users match the criteria.</p>
+            )}
         </div>
     );
 };
 
-// This function pulls state from the Redux store and maps it to the component's props
-const mapStateToProps = (state) => {
-    return {
-        auth: state.auth,
-        users: state.users // <-- This makes `state.users` available as `props.users`
-    };
+const mapStateToProps = ({ users }) => {
+    return { users };
 };
 
-// This connects the component to Redux, providing `users` from the store
-// and the `fetchUsers` action as props.
 export default connect(mapStateToProps, { fetchUsers })(Sidebar);

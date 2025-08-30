@@ -7,7 +7,7 @@ const UserCard = ({ user }) => {
 
     return (
         // Using Materialize's default card style (no extra color classes)
-        <div className="card" style={{ marginBottom: '10px' }}>
+        <div className="themed-card" style={{ marginBottom: '10px' }}>
             <div className="card-content" style={{ padding: '12px' }}>
                 <i 
                     className="material-icons circle" 

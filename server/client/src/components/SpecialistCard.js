@@ -4,7 +4,7 @@ import { getIconForSpecialty } from '../utils/iconHelper';
 
 const SpecialistCard = ({ specialist }) => {
     return (
-        <div className="card blue-grey darken-1 white-text">
+        <div className="themed-card">
             <div className="card-content center-align">
                 <i className="material-icons" style={{ fontSize: '80px', margin: '20px 0' }}>
                     {getIconForSpecialty(specialist.specialty)}

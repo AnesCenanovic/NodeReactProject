@@ -1,16 +1,31 @@
 /* src/App.css */
 
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Lora:wght@500;700&display=swap');
+
+:root {
+  --bg-dark: #0D1B2A;
+  --primary-surface: #1B263B;
+  --secondary-surface: #415A77;
+  --text-primary: #E0E1DD;
+  --accent-color: #778DA9;
+  --font-heading: 'Lora', serif;
+  --font-body: 'Lato', sans-serif;
+}
+
 html, body, #root, .app-container {
   height: 100%;
-  overflow: hidden; /* Prevent the whole page from scrolling */
+  overflow: hidden;
 }
 
 body {
-    background-color: #121212; 
-    background-image: url('./background.jpg');
-    background-size: cover;
-    background-attachment: fixed; 
-    color: #f0f0f0; 
+    background-color: var(--bg-dark); 
+    color: var(--text-primary);
+    font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
 }
 
 .dashboard-layout {
@@ -41,38 +56,34 @@ body {
   overflow-y: auto;
 }
 
-.custom-card {
-    /* "Frosted Glass" effect */
-    background: rgba(255, 255, 255, 0.05); /* Very transparent white */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
-    border-radius: 10px; /* Softer corners */
+.themed-card {
+    background-color: var(--primary-surface);
+    border: 1px solid var(--secondary-surface);
+    border-radius: 12px; /* Softer, more modern corners */
     margin-bottom: 20px;
-    color: #f0f0f0; /* Ensure text is light */
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Deeper, more subtle shadow for depth */
+    transition: all 0.2s ease-in-out; /* Smooth transition for hover effects */
 }
 
-.custom-card .card-content {
+.themed-card:hover {
+    transform: translateY(-5px); /* Lift the card slightly */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.themed-card .card-content {
     padding: 24px;
 }
 
-.custom-card .card-title {
-    font-weight: 500;
+.themed-card .card-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
     margin-bottom: 15px;
 }
 
-.custom-card .card-action {
-    background-color: transparent !important; /* Override Materialize's default */
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+.themed-card .card-action {
+    background-color: transparent !important;
+    border-top: 1px solid var(--secondary-surface) !important;
     padding: 16px 24px;
-}
-
-.custom-card .card-action a {
-    color: #03a9f4 !important; /* A nice bright blue for links */
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-right: 20px;
 }
 
 nav.custom-header {
@@ -91,4 +102,17 @@ nav.custom-header {
 
 .dropdown-content {
   z-index: 9999 !important;
+}
+
+.hero-section {
+    padding: 40px 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--secondary-surface), var(--primary-surface));
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+    margin: 0;
 }

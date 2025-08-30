@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import Sidebar from './Sidebar';       
 import PostList from './PostList';     
 import ForumList from './ForumList';   
-import DashboardNav from './DashboardNav'; 
+import DashboardNav from './DashboardNav';
+import DashboardHero from './DashboardHero';
 
 const Dashboard = () => {
     const [activeView, setActiveView] = useState('posts');
@@ -41,6 +42,8 @@ const Dashboard = () => {
 
                     {/* Middle Column: The Main, Scrollable Content */}
                     <div className="dashboard-main">
+                                    
+                        <DashboardHero />
                         {renderContent()}
                     </div>
 
