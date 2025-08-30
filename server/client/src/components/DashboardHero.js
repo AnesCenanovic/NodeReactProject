@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const DashboardHero = ({ auth }) => {
-    // Don't render if we don't know the user yet
     if (!auth) return null;
 
     return (

@@ -221,3 +221,48 @@ nav.themed-header ul a:hover {
 .themed-nav-menu a.active .material-icons {
     color: var(--bg-dark); /* Match the icon color to the text color */
 }
+
+.themed-form-container {
+    background-color: var(--primary-surface);
+    border: 1px solid var(--secondary-surface);
+    border-radius: 12px;
+    padding: 32px;
+    margin-top: 40px;
+}
+
+.themed-form-container h4 {
+    font-family: var(--font-heading);
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+/* Style the text inputs and textareas */
+.themed-form-container .input-field input[type="text"],
+.themed-form-container .input-field input[type="email"],
+.themed-form-container .input-field textarea {
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--secondary-surface) !important;
+    box-shadow: none !important; /* Remove default focus shadow */
+}
+
+/* Style the focus underline to use our accent color */
+.themed-form-container .input-field input[type="text"]:focus,
+.themed-form-container .input-field input[type="email"]:focus,
+.themed-form-container .input-field textarea:focus {
+    border-bottom: 1px solid var(--accent-color) !important;
+}
+
+/* Style the labels to be readable */
+.themed-form-container .input-field label {
+    color: var(--accent-color);
+}
+
+/* Style the buttons area for clean alignment */
+.themed-form-container .form-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-end; /* Aligns buttons to the right */
+    align-items: center;
+    gap: 15px; /* Adds space between buttons */
+}

@@ -1,10 +1,9 @@
-import React, { useState } from 'react'; // <-- Add useState back
+import React, { useState } from 'react'; 
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getIconForRole } from '../utils/iconHelper';
-import { updateUserRoleAdmin, fetchUsers } from '../actions'; // <-- Import new action
+import { updateUserRoleAdmin, fetchUsers } from '../actions'; 
 
-// --- CREATE A NEW COMPONENT FOR THE FORM ---
 const AdminRoleForm = ({ user, updateUserRoleAdmin, fetchUsers }) => {
     const [role, setRole] = useState(user.role);
     const [message, setMessage] = useState('');
@@ -12,11 +11,9 @@ const AdminRoleForm = ({ user, updateUserRoleAdmin, fetchUsers }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage('Updating...');
-        // Call the new admin action
         const result = await updateUserRoleAdmin(user._id, role);
         if (result.success) {
             setMessage('Role updated successfully!');
-            // Refresh the user list to get the latest data
             fetchUsers(); 
         } else {
             setMessage('Error updating role.');
@@ -43,17 +40,27 @@ const AdminRoleForm = ({ user, updateUserRoleAdmin, fetchUsers }) => {
 
 
 const Profile = ({ auth, users, updateUserRoleAdmin, fetchUsers }) => { 
-    // ... (the existing logic to find displayUser is the same) ...
     const { userId } = useParams();
     const userToShow = users.find(user => user._id === userId);
     const displayUser = userToShow || auth;
 
     if (!displayUser) { return <div>Loading...</div>; }
 
+    const canEdit = auth && (auth.role === 'admin' || auth._id === displayUser._id);
+
     return (
         <div style={{ textAlign: 'center', marginTop: '30px' }}>
             <i className="material-icons" style={{ fontSize: '150px', color: '#90a4ae' }}>
                 {getIconForRole(displayUser.role)}
+
+                {canEdit && (
+                    <div style={{ marginTop: '20px' }}>
+                        <Link to={`/profile/edit/${displayUser._id}`} className="btn blue">
+                            <i className="material-icons left">edit</i>
+                            Edit Profile
+                        </Link>
+                    </div>
+                )}
             </i>
             <h2>{displayUser.name}</h2>
             <p><strong>Email:</strong> {displayUser.email}</p>
@@ -68,5 +75,4 @@ const Profile = ({ auth, users, updateUserRoleAdmin, fetchUsers }) => {
 
 const mapStateToProps = ({ auth, users }) => ({ auth, users });
 
-// Connect the new actions to the Profile component's props
 export default connect(mapStateToProps, { updateUserRoleAdmin, fetchUsers })(Profile);

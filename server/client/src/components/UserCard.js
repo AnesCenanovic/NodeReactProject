@@ -6,9 +6,8 @@ const UserCard = ({ user }) => {
     if (!user) { return null; }
 
     return (
-        // Using Materialize's default card style (no extra color classes)
         <div className="themed-card" style={{ marginBottom: '10px' }}>
-            <div className="card-content" style={{ padding: '12px' }}>
+            <Link to={`/profile/${user._id}`} className="card-content" style={{ padding: '12px', display: 'block', color: 'inherit' }}>
                 <i 
                     className="material-icons circle" 
                     style={{ 
@@ -30,7 +29,7 @@ const UserCard = ({ user }) => {
                         {user.role}
                     </p>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 };
