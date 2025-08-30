@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS, FETCH_POSTS, CREATE_POST, FETCH_FORUMS, CREATE_FORUM, FETCH_SPECIALISTS, CREATE_SPECIALIST } from './types';
+import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS, FETCH_POSTS, CREATE_POST, FETCH_FORUMS, CREATE_FORUM, FETCH_SPECIALISTS, CREATE_SPECIALIST, FETCH_INBOX } from './types';
 
 export const fetchUsers = () => async dispatch => {
     try {
@@ -93,4 +93,9 @@ export const updateUserRoleAdmin = (userId, role) => async dispatch => {
         console.error("Error updating user role (admin):", err);
         return { success: false };
     }
+};
+
+export const fetchInbox = () => async dispatch => {
+    const res = await axios.get('/api/inbox');
+    dispatch({ type: FETCH_INBOX, payload: res.data });
 };

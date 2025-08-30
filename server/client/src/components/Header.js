@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react'; // <-- Change from Component to useEffect
+import React, { useEffect } from 'react'; 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import ForumInbox from './ForumInbox'; // <-- Import
-import M from 'materialize-css'; // <-- Import Materialize JS
+import ForumInbox from './InboxDropdown'; 
+import M from 'materialize-css'; 
 
 const Header = (props) => {
     // This effect runs after the component renders to initialize dropdowns
     useEffect(() => {
         let elems = document.querySelectorAll('.dropdown-trigger');
         M.Dropdown.init(elems, { coverTrigger: false });
-    }, []);
+    }, [props.auth]); // Re-run if auth status changes
 
     const renderContent = () => {
         switch (props.auth) {

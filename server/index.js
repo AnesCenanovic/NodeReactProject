@@ -30,6 +30,7 @@ require('./routes/userRoutes')(app);
 require('./routes/postRoutes.js')(app);
 require('./routes/forumRoutes')(app);
 require('./routes/specialistRoutes')(app);
+require('./routes/inboxRoutes')(app);
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT);

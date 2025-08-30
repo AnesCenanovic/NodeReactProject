@@ -4,6 +4,7 @@ import usersReducer from "./usersReducer";
 import postReducer from './postReducer';
 import forumReducer from './forumReducer';
 import specialistReducer from './specialistReducer';
+import inboxReducer from './inboxReducer';
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
     users: usersReducer,
     posts: postReducer,
     forums: forumReducer,
-    specialists: specialistReducer
+    specialists: specialistReducer,
+    inbox: inboxReducer
 });

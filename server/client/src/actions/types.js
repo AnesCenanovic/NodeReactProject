@@ -8,3 +8,4 @@ export const CREATE_FORUM = 'create_forum';
 export const FETCH_SPECIALISTS = 'fetch_specialists';
 export const FETCH_SPECIALIST = 'fetch_specialist';
 export const CREATE_SPECIALIST = 'create_specialist';
+export const FETCH_INBOX = 'fetch_inbox';

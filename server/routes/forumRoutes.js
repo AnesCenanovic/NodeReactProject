@@ -6,13 +6,9 @@ const User = mongoose.model('users');
 
 module.exports = app => {
     app.get('/api/forums', requireLogin, async (req, res) => {
-        let forums;
-        if (req.user.role === 'admin') {
-            forums = await Forum.find({}).sort({ createdAt: -1 });
-        } else {
-            forums = await Forum.find({ members: req.user.id }).sort({ createdAt: -1 });
-        }
-        res.send(forums);
+        const forums = await Forum.find({})
+                .sort({ createdAt: -1 });
+            res.send(forums);
     });
 
     app.post('/api/forums', requireLogin, async (req, res) => {
