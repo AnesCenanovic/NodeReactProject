@@ -2,9 +2,9 @@ import React from 'react';
 
 const UserFilter = ({ searchTerm, onSearchChange, roleFilter, onRoleChange }) => {
     return (
-        <div className="card" style={{ padding: '15px', marginBottom: '20px' }}>
+        <div className="themed-filter">
             <div className="input-field" style={{ marginTop: 0 }}>
-                <i className="material-icons prefix">search</i>
+                <i className="material-icons">search</i>
                 <input 
                     id="search" 
                     type="text" 

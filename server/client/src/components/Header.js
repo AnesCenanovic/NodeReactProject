@@ -27,9 +27,8 @@ const Header = (props) => {
         }
     };
     
-    // ... rest of the component is similar, just functional style ...
     return (
-        <nav className="custom-header">
+        <nav className="themed-header">
             <div className="nav-wrapper">
                 <Link to={props.auth ? '/surveys' : '/'} className="brand-logo left" style={{ marginLeft: '10px' }}>
                     Emaily

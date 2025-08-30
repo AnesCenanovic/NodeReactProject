@@ -27,7 +27,12 @@ const PostList = ({ posts, fetchPosts }) => {
         ));
     };
 
-    return <div>{renderPosts()}</div>;
+        return (
+        <div>
+            <h4 className="center-align">Current Posts</h4>
+            {renderPosts()}
+        </div>
+    );
 };
 
 const mapStateToProps = ({ posts }) => ({ posts });
