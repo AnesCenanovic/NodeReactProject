@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'; 
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import ForumInbox from './InboxDropdown'; 
+import { Link } from 'react-router-dom'; 
 import M from 'materialize-css'; 
 
 const Header = (props) => {
@@ -19,9 +18,7 @@ const Header = (props) => {
                 return <li><a href="/auth/google">Login With Google</a></li>;
             default:
                 return (
-                    <>
-                        {/* Add the ForumInbox component here */}
-                        <ForumInbox />
+                    <>  <li><Link to="/inbox">Inbox</Link></li>
                         <li><Link to="/specialists">Specialists</Link></li>
                         <li><Link to="/profile">Profile</Link></li>
                         <li><a href="/api/logout">Logout</a></li>

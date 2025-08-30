@@ -13,7 +13,7 @@ import SpecialistsPage from './SpecialistsPage';
 import SpecialistDetailPage from './SpecialistDetailPage';
 import SpecialistCreate from './SpecialistCreate';
 import ForumDetailPage from './ForumDetailsPage';
-
+import InboxPage from './InboxPage';
 import './App.css';
 
 const SurveyNew = () => (
@@ -27,15 +27,16 @@ class App extends Component {
 render() {
         return (
             <BrowserRouter>
-                <div>
+                <div className="app-container">
                     <Header />
-                    <div className="container" style={{ marginRight: 250 }}>
+                    <div style={{ marginRight: 0 }}> 
                         <Switch>
                             <Route exact path="/" component={Landing} />
                             <Route exact path="/surveys" component={Dashboard} />
                             <Route path="/surveys/new" component={SurveyNew} />
                             <Route path="/profile/:userId?" component={Profile} />
                             <Route path="/posts/new" component={PostCreate} />
+                            <Route exact path="/inbox" component={InboxPage} />
                             <Route exact path="/posts/:postId" component={PostDetail} />
                             <Route exact path="/forums/new" component={ForumCreate} />
                             <Route exact path="/specialists" component={SpecialistsPage} />
@@ -44,7 +45,7 @@ render() {
                             <Route exact path="/forums/:id" component={ForumDetailPage} />
                         </Switch>
                     </div>
-                </div>
+                    </div>
             </BrowserRouter>
         );
     }

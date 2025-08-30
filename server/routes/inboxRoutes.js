@@ -13,7 +13,7 @@ module.exports = app => {
                 Forum.find({ members: req.user.id }, 'title createdAt'),
 
                 // 2. Find all posts the user has created
-                Post.find({ _user: req.user.id }, 'title createdAt'),
+                Post.find({ _user: req.user.id }, 'title createdAt content authorName'),
 
                 // 3. Find all reviews the user has written
                 Review.find({ _author: req.user.id }, 'comment rating createdAt')

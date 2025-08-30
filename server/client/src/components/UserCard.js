@@ -3,49 +3,33 @@ import { Link } from 'react-router-dom';
 import { getIconForRole } from '../utils/iconHelper';
 
 const UserCard = ({ user }) => {
-    // This log helps us debug if the `role` is missing from the user object
-    // You can remove it after you confirm the icons are working.
-    console.log('UserCard received user:', user);
-
-    // Defensive check in case user is not passed correctly
-    if (!user) {
-        return null;
-    }
+    if (!user) { return null; }
 
     return (
-        // We're removing the blue-grey class to use the default card style, which is cleaner
-        <div className="card" style={{ marginBottom: '15px' }}>
-            <div className="card-content" style={{ padding: '15px' }}> {/* Reduced padding */}
-                
+        // Using Materialize's default card style (no extra color classes)
+        <div className="card" style={{ marginBottom: '10px' }}>
+            <div className="card-content" style={{ padding: '12px' }}>
                 <i 
                     className="material-icons circle" 
                     style={{ 
-                        fontSize: '24px', // Smaller icon
-                        padding: '8px',   // Smaller padding
-                        backgroundColor: '#eeeeee', // A light grey background for the circle
-                        color: '#616161', // A darker grey for the icon
+                        fontSize: '20px', 
+                        padding: '8px',
+                        backgroundColor: '#f5f5f5',
+                        color: '#424242',
                         float: 'left', 
-                        marginRight: '15px' 
+                        marginRight: '12px' 
                     }}
                 >
                     {getIconForRole(user.role)}
                 </i>
-
-                <div style={{ fontSize: '0.9em', color: '#757575' }}>
-                    <span className="card-title" style={{ fontSize: '1.1em', lineHeight: '1.2em' }}>
+                <div style={{ overflow: 'hidden' }}>
+                    <span className="card-title" style={{ fontSize: '1rem', lineHeight: '1.2rem', fontWeight: 500 }}>
                         {user.name}
                     </span>
-                    <p style={{ fontSize: '0.9em', color: '#757575' }}>
-                        {user.email}
-                    </p>
-                    <p style={{ fontSize: '0.9em', color: '#757575', fontStyle: 'italic' }}>
+                    <p style={{ fontSize: '0.8rem', color: '#9e9e9e' }}>
                         {user.role}
                     </p>
                 </div>
-
-            </div>
-            <div className="card-action" style={{ padding: '10px 15px' }}>
-                <Link to={`/profile/${user._id}`}>View Profile</Link>
             </div>
         </div>
     );

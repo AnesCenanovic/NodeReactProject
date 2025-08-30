@@ -30,28 +30,31 @@ const Dashboard = () => {
         );
     };
 
-    return (
-        <div>
-            {}
-            <div className="dashboard-container">
-                {/* Left column: The new navigation */}
-                <DashboardNav activeView={activeView} setActiveView={setActiveView} />
+        return (
+                // The main layout wrapper with our new CSS Grid class
+                <div className="dashboard-layout">
+                    
+                    {/* Left Column: The Navigation */}
+                    <div className="dashboard-nav">
+                        <DashboardNav activeView={activeView} setActiveView={setActiveView} />
+                    </div>
 
-                {/* Middle column: The dynamically rendered content */}
-                <div className="main-content">
-                    {renderContent()}
+                    {/* Middle Column: The Main, Scrollable Content */}
+                    <div className="dashboard-main">
+                        {renderContent()}
+                    </div>
+
+                    {/* Right Column: The User Sidebar */}
+                    <div className="dashboard-users">
+                        <Sidebar />
+                    </div>
+
+                    {/* The Floating Action Button (its position is fixed, so it's fine outside the grid) */}
+                    <div className="fixed-action-btn">
+                        {renderCreateButton()}
+                    </div>
                 </div>
-
-                {/* Right column: The user sidebar */}
-                <Sidebar />
-            </div>
-
-            {/* The dynamically rendered Floating Action Button */}
-            <div className="fixed-action-btn">
-                {renderCreateButton()}
-            </div>
-        </div>
-    );
+            );
 };
 
 export default Dashboard;
