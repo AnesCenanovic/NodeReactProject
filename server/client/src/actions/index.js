@@ -34,15 +34,14 @@ export const updateUserRole = (role) => async dispatch => {
     }
 }
 
-export const fetchPosts = () => async dispatch => {
-    const res = await axios.get('/api/posts');
+export const fetchPosts = (page = 1) => async dispatch => {
+    const res = await axios.get(`/api/posts?page=${page}&limit=5`);
     dispatch({ type: FETCH_POSTS, payload: res.data });
 };
 
 export const createPost = (values, history) => async dispatch => {
     const res = await axios.post('/api/posts', values);
     history.push('/surveys'); 
-    dispatch({ type: CREATE_POST, payload: res.data }); 
 };
 
 export const fetchForums = () => async dispatch => {

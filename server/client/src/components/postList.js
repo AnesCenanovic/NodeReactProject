@@ -1,39 +1,40 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'; 
 import { fetchPosts } from '../actions';
-import { getIconForPost } from '../utils/iconHelper';
+import PostCard from './PostCard';
+import Pagination from './Pagination'; 
 
-const PostList = ({ posts, fetchPosts }) => {
+const PostList = ({ postsData, fetchPosts }) => { 
+    console.log('PostList received postsData prop:', postsData);
+    const { data, currentPage, totalPages } = postsData;
+
     useEffect(() => {
-        fetchPosts();
+        fetchPosts(1);
     }, [fetchPosts]);
+    const handlePageChange = (pageNumber) => {
+        fetchPosts(pageNumber);
+    };
 
     const renderPosts = () => {
-        return posts.map(post => (
-            <div className="card blue-grey darken-1" key={post._id}>
-                <div className="card-content white-text">
-                    <span className="card-title">
-                        <i className="material-icons left">{getIconForPost(post._id)}</i>
-                        {post.title}
-                    </span>
-                    <p>{post.content.substring(0, 150)}...</p> 
-                    <p className="right">Posted By: {post.authorName}</p>
-                </div>
-                <div className="card-action">
-                    <Link to={`/posts/${post._id}`}>Read More</Link>
-                </div>
-            </div>
+        return data.map(post => (
+            <PostCard key={post._id} post={post} />
         ));
     };
 
-        return (
+    return (
         <div>
-            <h4 className="center-align">Current Posts</h4>
             {renderPosts()}
+            <Pagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
         </div>
     );
 };
 
-const mapStateToProps = ({ posts }) => ({ posts });
+const mapStateToProps = ({ posts }) => {
+    return { postsData: posts }; // Pass the whole object
+};
+
 export default connect(mapStateToProps, { fetchPosts })(PostList);

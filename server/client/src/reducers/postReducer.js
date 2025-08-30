@@ -1,11 +1,24 @@
 import { FETCH_POSTS, CREATE_POST } from '../actions/types';
 
-export default function postReducer(state = [], action) {
+const INITIAL_STATE = {
+    data: [], 
+    totalPages: 1,
+    currentPage: 1
+};
+
+export default function postReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case FETCH_POSTS:
-            return action.payload;
+            return {
+                data: action.payload.posts,
+                totalPages: action.payload.totalPages,
+                currentPage: action.payload.currentPage
+            };
         case CREATE_POST:
-            return [action.payload, ...state];
+            return {
+            ...state, 
+                data: [action.payload, ...state.data] 
+            };
         default:
             return state;
     }
