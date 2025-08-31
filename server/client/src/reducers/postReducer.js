@@ -1,4 +1,4 @@
-import { FETCH_POSTS, CREATE_POST } from '../actions/types';
+import { FETCH_POSTS, CREATE_POST, UPDATE_POST } from '../actions/types';
 
 const INITIAL_STATE = {
     data: [], 
@@ -18,6 +18,13 @@ export default function postReducer(state = INITIAL_STATE, action) {
             return {
             ...state, 
                 data: [action.payload, ...state.data] 
+            };
+        case UPDATE_POST:
+            return {
+                ...state,
+                data: state.data.map(post => 
+                    post._id === action.payload._id ? action.payload : post
+                )
             };
         default:
             return state;

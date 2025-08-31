@@ -9,6 +9,7 @@ require('./models/Forum');
 require('./services/passport');
 require('./models/Specialist');
 require('./models/Review');
+require('./models/Comment');
 
 mongoose.connect(keys.mongoURI);
 
@@ -31,6 +32,7 @@ require('./routes/postRoutes.js')(app);
 require('./routes/forumRoutes')(app);
 require('./routes/specialistRoutes')(app);
 require('./routes/inboxRoutes')(app);
+require('./routes/commentRoutes')(app);
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS, FETCH_POSTS, CREATE_POST, FETCH_FORUMS, CREATE_FORUM, FETCH_SPECIALISTS, CREATE_SPECIALIST, FETCH_INBOX } from './types';
+import { FETCH_USER, UPDATE_USER_ROLE, FETCH_USERS, FETCH_POSTS, CREATE_POST, FETCH_FORUMS, CREATE_FORUM, FETCH_SPECIALISTS, CREATE_SPECIALIST, FETCH_INBOX, UPDATE_POST } from './types';
 
 export const fetchUsers = () => async dispatch => {
     try {
@@ -124,4 +124,13 @@ export const deleteForum = (forumId, history) => async dispatch => {
         history.push('/surveys'); 
         dispatch(fetchForums(1)); 
     }
+};
+
+export const likePost = (postId) => async dispatch => {
+    const res = await axios.patch(`/api/posts/${postId}/like`);
+    dispatch({ type: UPDATE_POST, payload: res.data });
+};
+
+export const addComment = (postId, values) => async dispatch => {
+    await axios.post(`/api/posts/${postId}/comments`, values);
 };

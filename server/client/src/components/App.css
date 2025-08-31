@@ -266,3 +266,9 @@ nav.themed-header ul a:hover {
     align-items: center;
     gap: 15px; /* Adds space between buttons */
 }
+
+.card-action-flex {
+    display: flex;
+    justify-content: space-between; /* Pushes children to opposite ends */
+    align-items: center; /* Vertically aligns them */
+}

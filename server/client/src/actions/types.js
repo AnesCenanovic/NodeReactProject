@@ -9,3 +9,4 @@ export const FETCH_SPECIALISTS = 'fetch_specialists';
 export const FETCH_SPECIALIST = 'fetch_specialist';
 export const CREATE_SPECIALIST = 'create_specialist';
 export const FETCH_INBOX = 'fetch_inbox';
+export const UPDATE_POST = 'update_post';

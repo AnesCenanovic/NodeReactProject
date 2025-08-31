@@ -3,74 +3,139 @@ import { useParams, useHistory, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { getIconForPost } from '../utils/iconHelper';
-import { deletePost } from '../actions';
+import { deletePost, addComment } from '../actions';
 
-const PostDetail = ({auth, deletePost}) => {
-    const { postId } = useParams(); 
+const PostDetail = ({ auth, deletePost, addComment }) => {
+    const { postId } = useParams();
     const history = useHistory();
     const [post, setPost] = useState(null);
+    const [comments, setComments] = useState([]);
+    const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // We define a single async function to get all necessary data
+        const fetchAllData = async () => {
+            if (postId) {
+                try {
+                    setLoading(true);
+                    
+                    // Use Promise.all to run both API calls in parallel
+                    const [postRes, commentsRes] = await Promise.all([
+                        axios.get(`/api/posts/${postId}`),
+                        axios.get(`/api/posts/${postId}/comments`)
+                    ]);
+
+                    // Once both are complete, update the state
+                    setPost(postRes.data);
+                    setComments(commentsRes.data);
+
+                } catch (err) {
+                    console.error("Error fetching post details", err);
+                } finally {
+                    // This will run whether the requests succeed or fail
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchAllData();
+    }, [postId]); // This effect correctly depends only on the postId from the URL
+
+
+    const handleCommentSubmit = async (e) => {
+        e.preventDefault();
+        await addComment(postId, { content: newComment });
+        setNewComment('');
+        // Re-fetch only the comments after submitting a new one
+        const res = await axios.get(`/api/posts/${postId}/comments`);
+        setComments(res.data);
+    };
 
     const handleDelete = () => {
         deletePost(postId, history);
     };
 
-    useEffect(() => {
-        const fetchPost = async () => {
-            try {
-                setLoading(true);
-                const res = await axios.get(`/api/posts/${postId}`);
-                setPost(res.data);
-                setLoading(false);
-            } catch (err) {
-                console.error("Error fetching post", err);
-                setLoading(false);
-            }
-        };
-
-        fetchPost();
-    }, [postId]); 
-
     if (loading) {
-        return <div>Loading post...</div>;
+        return <div className="center-align"><h5>Loading post...</h5></div>;
     }
 
     if (!post) {
-        return <div>Post not found.</div>;
+        return <div className="center-align"><h5>Post not found.</h5></div>;
     }
 
     return (
-        <div className="card blue-grey darken-1" style={{ marginTop: '30px' }}>
-            <div className="card-content white-text">
-                                <span className="card-title">
-                    <i className="material-icons left">{getIconForPost(post._id)}</i>
-                    {post.title}
-                </span>
-                <p style={{ whiteSpace: 'pre-wrap' }}>{post.content}</p>
-                <p className="right">
-                    Posted By: {post.authorName} on {new Date(post.createdAt).toLocaleDateString()}
-                </p>
+        <div>
+            <div className="card blue-grey darken-1 white-text" style={{ marginTop: '30px' }}>
+                <div className="card-content">
+                    <span className="card-title">
+                        <i className="material-icons left">{getIconForPost(post._id)}</i>
+                        {post.title}
+                    </span>
+                    <p style={{ whiteSpace: 'pre-wrap' }}>{post.content}</p>
+                    <p className="right">
+                        Posted By: {post.authorName} on {new Date(post.createdAt).toLocaleDateString()}
+                    </p>
+                </div>
+                <div className="card-action">
+                    {post.links.map((link, index) => (
+                        <a key={index} href={link} target="_blank" rel="noopener noreferrer">
+                            Link {index + 1}
+                        </a>
+                    ))}
+                    {auth && auth.role === 'admin' && (
+                        <div className="right">
+                            <Link 
+                                to={`/posts/edit/${post._id}`} 
+                                className="btn-floating yellow darken-2" 
+                                style={{ marginRight: '10px' }}
+                                title="Edit Post" 
+                            >
+                                <i className="material-icons">edit</i>
+                            </Link>
+                            <button 
+                                onClick={handleDelete} 
+                                className="btn-floating red"
+                                title="Delete Post"
+                            >
+                                <i className="material-icons">delete</i>
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
-            <div className="card-action">
-                {post.links.map((link, index) => (
-                    <a key={index} href={link} target="_blank" rel="noopener noreferrer">
-                        Link {index + 1}
-                    </a>
-                ))}
-            </div>
-            {auth && auth.role === 'admin' && (
-                    <div style={{ marginTop: '10px' }}>
-                        <Link to={`/posts/edit/${post._id}`} className="btn yellow darken-2" style={{ marginRight: '10px' }}>
-                            Edit
-                        </Link>
-                        <button onClick={handleDelete} className="btn red">
-                            Delete
-                        </button>
+
+            <div className="themed-form-container" style={{ marginTop: '30px' }}>
+                <h5>Comments ({comments.length})</h5>
+                <form onSubmit={handleCommentSubmit} style={{ marginBottom: '30px' }}>
+                    <div className="input-field">
+                        <textarea
+                            id="comment-textarea"
+                            className="materialize-textarea"
+                            placeholder="Add a comment..."
+                            value={newComment}
+                            onChange={e => setNewComment(e.target.value)}
+                            style={{ color: 'white' }} 
+                        ></textarea>
                     </div>
-                )}
+                    <button type="submit" className="btn green">Submit</button>
+                </form>
+            
+                <div className="comment-list">
+                    {comments.map(comment => (
+                        <div className="comment" key={comment._id}>
+                            <div className="comment-author">
+                                <i className="material-icons">account_circle</i>
+                                <strong>{comment.authorName}</strong>
+                            </div>
+                            <p className="comment-content">{comment.content}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };
 
-const mapStateToProps = ({ auth }) => ({ auth }); 
-export default connect(mapStateToProps, { deletePost })(PostDetail); 
+const mapStateToProps = ({ auth }) => ({ auth });
+export default connect(mapStateToProps, { deletePost, addComment })(PostDetail);
