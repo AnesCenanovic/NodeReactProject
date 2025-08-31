@@ -112,3 +112,16 @@ export const deletePost = (postId, history) => async dispatch => {
         }
     }
 };
+
+export const editForum = (forumId, values, history) => async dispatch => {
+    await axios.patch(`/api/forums/${forumId}`, values);
+    history.push('/surveys'); 
+};
+
+export const deleteForum = (forumId, history) => async dispatch => {
+    if (window.confirm('Are you sure you want to delete this forum?')) {
+        await axios.delete(`/api/forums/${forumId}`);
+        history.push('/surveys'); 
+        dispatch(fetchForums(1)); 
+    }
+};

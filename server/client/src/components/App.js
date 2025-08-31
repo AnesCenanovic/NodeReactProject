@@ -44,6 +44,7 @@ render() {
                             <Route exact path="/specialists" component={SpecialistsPage} />
                             <Route exact path="/specialists/:id" component={SpecialistDetailPage} />
                             <Route exact path="/admin/specialists/new" component={SpecialistCreate} />
+                            <Route exact path="/forums/edit/:forumId" component={ForumCreate} />
                             <Route exact path="/forums/:id" component={ForumDetailPage} />
                             <Route exact path="/profile/edit/:userId" component={ProfileEditPage} />
                         </Switch>

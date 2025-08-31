@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
-import UserCard from './UserCard'; 
+import UserCard from './UserCard';
+import { deleteForum } from '../actions';
+import { connect } from 'react-redux';
 
-const ForumDetailPage = () => {
+const ForumDetailPage = ({auth, deleteForum}) => {
     const { id } = useParams();
+    const history = useHistory();
     const [forum, setForum] = useState(null);
 
     const renderIcon = (type) => {
@@ -18,6 +21,10 @@ const ForumDetailPage = () => {
             default:
                 return 'forum';
         }
+    };
+
+    const handleDelete = () => {
+        deleteForum(id, history);
     };
 
     useEffect(() => {
@@ -77,6 +84,16 @@ const ForumDetailPage = () => {
                             </a>
                         );
                     })}
+                    {auth && auth.role === 'admin' && (
+                        <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '1px solid rgba(255,255,255,0.2)' }}>
+                            <Link to={`/forums/edit/${forum._id}`} className="btn yellow darken-2" style={{ marginRight: '10px' }}>
+                                Edit
+                            </Link>
+                            <button onClick={handleDelete} className="btn red">
+                                Delete
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
             {renderParticipants()}
@@ -84,4 +101,5 @@ const ForumDetailPage = () => {
     );
 };
 
-export default ForumDetailPage;
+const mapStateToProps = ({ auth }) => ({ auth }); 
+export default connect(mapStateToProps, { deleteForum })(ForumDetailPage); 

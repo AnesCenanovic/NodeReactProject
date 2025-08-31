@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const requireLogin = require('../services/requireLogin');
+const requireAdmin = require('../services/requireAdmin');
 
 const Forum = mongoose.model('forums');
 const User = mongoose.model('users'); 
@@ -28,6 +29,28 @@ module.exports = app => {
             });
         } catch (err) {
             res.status(500).send({ error: 'Error fetching forums' });
+        }
+    });
+
+    app.patch('/api/forums/:forumId', requireLogin, requireAdmin, async (req, res) => {
+        try {
+            const updatedForum = await Forum.findByIdAndUpdate(
+                req.params.forumId,
+                req.body, 
+                { new: true } 
+            );
+            res.send(updatedForum);
+        } catch (err) {
+            res.status(422).send(err);
+        }
+    });
+
+    app.delete('/api/forums/:forumId', requireLogin, requireAdmin, async (req, res) => {
+        try {
+            await Forum.findByIdAndDelete(req.params.forumId);
+            res.send({ message: 'Forum deleted successfully' });
+        } catch (err) {
+            res.status(422).send(err);
         }
     });
 
