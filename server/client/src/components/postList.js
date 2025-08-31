@@ -1,28 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react'; 
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions';
 import PostCard from './PostCard';
-import Pagination from './Pagination'; 
+import Pagination from './Pagination';
+import ContentFilter from './ContentFilter'; 
 
-const PostList = ({ postsData, fetchPosts }) => { 
-    console.log('PostList received postsData prop:', postsData);
-    const { data, currentPage, totalPages } = postsData;
+const PostList = ({ postsData, fetchPosts }) => {
+    const { data: posts, currentPage, totalPages } = postsData;
+
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchPosts(1);
     }, [fetchPosts]);
+
     const handlePageChange = (pageNumber) => {
         fetchPosts(pageNumber);
     };
 
+    const filteredPosts = posts.filter(post => 
+        post.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const renderPosts = () => {
-        return data.map(post => (
+        if (!posts) return null; 
+        if (filteredPosts.length === 0) {
+            return <p>No posts found.</p>;
+        }
+        return filteredPosts.map(post => (
             <PostCard key={post._id} post={post} />
         ));
     };
 
     return (
         <div>
+            <ContentFilter 
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+                placeholder="Search posts by title..."
+            />
             {renderPosts()}
             <Pagination 
                 currentPage={currentPage}
@@ -34,7 +50,7 @@ const PostList = ({ postsData, fetchPosts }) => {
 };
 
 const mapStateToProps = ({ posts }) => {
-    return { postsData: posts }; // Pass the whole object
+    return { postsData: posts };
 };
 
 export default connect(mapStateToProps, { fetchPosts })(PostList);
