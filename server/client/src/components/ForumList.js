@@ -1,62 +1,51 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'; 
 import { fetchForums } from '../actions';
+import ForumCard from './ForumCard'; 
+import Pagination from './Pagination'; 
 
-const ForumList = ({ forums, fetchForums }) => {
+const ForumList = ({ forumsData, fetchForums }) => { 
+    const { data, currentPage, totalPages } = forumsData;
+
     useEffect(() => {
-        fetchForums();
+        fetchForums(1);
     }, [fetchForums]);
 
-    // --- 1. HELPER FUNCTION FOR ICONS ---
-    const renderIcon = (type) => {
-        switch (type) {
-            case 'workshop':
-                return 'group'; // Materialize icon name for a group
-            case 'event':
-                return 'event'; // Icon for an event
-            case 'seminar':
-                return 'school'; // Icon for learning/school
-            default:
-                return 'forum';
+    const handlePageChange = (pageNumber) => {
+        if (pageNumber > 0 && pageNumber <= totalPages) {
+            fetchForums(pageNumber);
         }
     };
 
     const renderForums = () => {
-        if (!forums || forums.length === 0) {
-            return (
+        if (!data || data.length === 0) {
+             return (
                 <div className="center-align">
                     <h5>No forums to display.</h5>
+                    <p>Create a new forum to get started!</p>
                 </div>
             );
         }
-        
-        return forums.map(forum => (
-            <div className="card blue-grey darken-1" key={forum._id}>
-                <div className="card-content white-text">
-                    <span className="card-title">
-                        <i className="material-icons left">{renderIcon(forum.type)}</i>
-                        {forum.type.toUpperCase()}: {forum.title}
-                    </span>
-                    <p>{forum.description}</p>
-                </div>
-                <div className="card-action">
-                    <Link to={`/forums/${forum._id}`}>Details</Link>
-                </div>
-            </div>
+        return data.map(forum => (
+            <ForumCard key={forum._id} forum={forum} />
         ));
     };
 
     return (
         <div>
-            <h4 className="center-align">Current Forums</h4>
+            <h4 className="center-align">Your Collaborative Forums</h4>
             {renderForums()}
+            <Pagination 
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
         </div>
     );
 };
 
 const mapStateToProps = ({ forums }) => {
-    return { forums };
+    return { forumsData: forums };
 };
 
 export default connect(mapStateToProps, { fetchForums })(ForumList);

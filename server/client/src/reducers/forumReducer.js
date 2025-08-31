@@ -1,8 +1,19 @@
 import { FETCH_FORUMS } from '../actions/types';
-export default function(state = [], action) {
+
+const INITIAL_STATE = {
+    data: [], 
+    totalPages: 1,
+    currentPage: 1
+};
+
+export default function forumsReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case FETCH_FORUMS:
-            return action.payload;
+            return {
+                data: action.payload.forums,
+                totalPages: action.payload.totalPages,
+                currentPage: action.payload.currentPage
+            };
         default:
             return state;
     }

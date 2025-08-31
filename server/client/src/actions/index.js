@@ -44,13 +44,9 @@ export const createPost = (values, history) => async dispatch => {
     history.push('/surveys'); 
 };
 
-export const fetchForums = () => async dispatch => {
-    try {
-        const res = await axios.get('/api/forums');
-        dispatch({ type: FETCH_FORUMS, payload: res.data });
-    } catch (error) {
-        console.error("Error fetching forums:", error);
-    }
+export const fetchForums = (page = 1) => async dispatch => {
+    const res = await axios.get(`/api/forums?page=${page}&limit=5`);
+    dispatch({ type: FETCH_FORUMS, payload: res.data });
 };
 
 export const createForum = (values, history) => async dispatch => {

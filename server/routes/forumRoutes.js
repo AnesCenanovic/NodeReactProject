@@ -6,8 +6,29 @@ const User = mongoose.model('users');
 
 module.exports = app => {
     app.get('/api/forums', requireLogin, async (req, res) => {
-        const forums = await Forum.find({}).sort({ createdAt: -1 });
-            res.send(forums);
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 5; 
+
+        const startIndex = (page - 1) * limit;
+
+        try {
+            const [forums, total] = await Promise.all([
+                Forum.find({})
+                    .sort({ createdAt: -1 })
+                    .skip(startIndex)
+                    .limit(limit),
+                Forum.countDocuments()
+            ]);
+            
+            res.send({
+                forums,
+                totalPages: Math.ceil(total / limit),
+                currentPage: page,
+                totalForums: total
+            });
+        } catch (err) {
+            res.status(500).send({ error: 'Error fetching forums' });
+        }
     });
 
     app.post('/api/forums', requireLogin, async (req, res) => {
