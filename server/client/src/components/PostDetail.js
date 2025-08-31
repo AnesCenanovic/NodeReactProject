@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import { getIconForPost } from '../utils/iconHelper';
+import { deletePost } from '../actions';
 
-const PostDetail = () => {
+const PostDetail = ({auth, deletePost}) => {
     const { postId } = useParams(); 
-    
+    const history = useHistory();
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const handleDelete = () => {
+        deletePost(postId, history);
+    };
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -52,8 +58,19 @@ const PostDetail = () => {
                     </a>
                 ))}
             </div>
+            {auth && auth.role === 'admin' && (
+                    <div style={{ marginTop: '10px' }}>
+                        <Link to={`/posts/edit/${post._id}`} className="btn yellow darken-2" style={{ marginRight: '10px' }}>
+                            Edit
+                        </Link>
+                        <button onClick={handleDelete} className="btn red">
+                            Delete
+                        </button>
+                    </div>
+                )}
         </div>
     );
 };
 
-export default PostDetail;
+const mapStateToProps = ({ auth }) => ({ auth }); 
+export default connect(mapStateToProps, { deletePost })(PostDetail); 

@@ -38,6 +38,7 @@ render() {
                             <Route exact path="/profile/:userId?" component={Profile} />
                             <Route exact path="/posts/new" component={PostCreate} />
                             <Route exact path="/inbox" component={InboxPage} />
+                            <Route exact path="/posts/edit/:postId" component={PostCreate} />
                             <Route exact path="/posts/:postId" component={PostDetail} />
                             <Route exact path="/forums/new" component={ForumCreate} />
                             <Route exact path="/specialists" component={SpecialistsPage} />

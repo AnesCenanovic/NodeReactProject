@@ -94,3 +94,21 @@ export const fetchInbox = () => async dispatch => {
     const res = await axios.get('/api/inbox');
     dispatch({ type: FETCH_INBOX, payload: res.data });
 };
+
+export const editPost = (postId, values, history) => async dispatch => {
+    await axios.patch(`/api/posts/${postId}`, values);
+    history.push('/surveys'); 
+};
+
+export const deletePost = (postId, history) => async dispatch => {
+    console.log('Attempting to delete post with ID:', postId);
+    if (window.confirm('Are you sure you want to delete this post?')) {
+        try {
+            await axios.delete(`/api/posts/${postId}`);
+            history.push('/surveys');
+            dispatch(fetchPosts(1));
+        } catch (error) {
+            console.error('Error from server while deleting post:', error.response.data);
+        }
+    }
+};
