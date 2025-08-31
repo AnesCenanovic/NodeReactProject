@@ -55,17 +55,18 @@ module.exports = app => {
         });
 
     app.post('/api/posts', requireLogin, async (req, res) => {
-        const { title, content, links } = req.body;
-
+        const { title, content, links, type } = req.body;
+        console.log('Backend received req.body:', req.body);
         const post = new Post({
             title,
             content,
+            type: type,
             links: links.split(',').map(link => link.trim()), 
             _user: req.user.id,
             authorName: req.user.name,
             createdAt: Date.now()
         });
-
+        console.log('Mongoose is about to save this post object:', post);
         try {
             await post.save();
             res.send(post);

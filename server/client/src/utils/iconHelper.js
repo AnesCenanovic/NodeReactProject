@@ -32,3 +32,12 @@ export const getIconForSpecialty = (specialty) => {
     
     return 'star';
 };
+
+export const getIconForPostType = (type) => {
+    switch (type) {
+        case 'article': return 'article';
+        case 'guide': return 'map';
+        case 'research paper': return 'science';
+        default: return 'description';
+    }
+};

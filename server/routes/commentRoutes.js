@@ -19,6 +19,7 @@ module.exports = app => {
             createdAt: Date.now()
         });
         await comment.save();
+        await Post.updateOne({ _id: req.params.postId }, { $inc: { commentCount: 1 } });
         res.send(comment);
     });
 

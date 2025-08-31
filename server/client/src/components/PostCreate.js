@@ -10,11 +10,12 @@ const PostCreate = (props) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [links, setLinks] = useState('');
+    const [type, setType] = useState('article');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const values = { title, content, links };
-        
+        const values = { title, content, links, type };
+        console.log('Submitting the following values to the backend:', values);
         if (postId) {
             props.editPost(postId, values, props.history);
         } else {
@@ -28,7 +29,8 @@ const PostCreate = (props) => {
                 const { title, content, links } = res.data;
                 setTitle(title);
                 setContent(content);
-                setLinks(links.join(', ')); 
+                setLinks(links.join(', '));
+                setType(res.data.type);
             });
         }
     }, [postId]);
@@ -67,6 +69,14 @@ const PostCreate = (props) => {
                     <label htmlFor="links">Links (comma-separated)</label>
                 </div>
                 
+                <div className="input-field">
+                    <select className="browser-default" value={type} onChange={e => setType(e.target.value)}>
+                        <option value="article">Article</option>
+                        <option value="guide">Guide</option>
+                        <option value="research paper">Research Paper</option>
+                    </select>
+                </div>
+
                 <Link to="/dashboard" className="btn-flat red white-text">
                     Cancel
                 </Link>
