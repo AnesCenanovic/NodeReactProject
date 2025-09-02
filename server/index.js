@@ -16,6 +16,9 @@ require('./models/Comment');
 require('./models/Message');
 require('./models/Conversation');
 
+const Message = mongoose.model('messages');
+const Conversation = mongoose.model('conversations');
+
 mongoose.connect(keys.mongoURI);
 
 const app = express();

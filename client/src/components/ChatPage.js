@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import axios from 'axios';
-import ConversationList from './ConversationsList'; 
-import ChatWindow from './ChatWindow';       
+import ConversationList from './ConversationsList';
+import ChatWindow from './ChatWindow'; 
 
 let socket;
 
 const ChatPage = ({ auth }) => {
+    const { conversationId } = useParams();
     const [conversations, setConversations] = useState([]);
     const [activeConversation, setActiveConversation] = useState(null);
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         if (auth) {
-            socket = io('http://localhost:5000'); // Establish connection
-
+            socket = io('http://localhost:5000');
             socket.on('receive_message', (newMessage) => {
-                // Only add the message if it's for the currently active conversation
                 setActiveConversation(currentActiveConvo => {
                     if (currentActiveConvo && currentActiveConvo._id === newMessage._conversation) {
                         setMessages(prevMessages => [...prevMessages, newMessage]);
@@ -25,12 +25,19 @@ const ChatPage = ({ auth }) => {
                     return currentActiveConvo;
                 });
             });
-
-            axios.get('/api/conversations').then(res => setConversations(res.data));
-
-            return () => socket.disconnect(); // Disconnect on cleanup
+            axios.get('/api/conversations').then(res => {
+                const convos = res.data;
+                setConversations(convos);
+                if (conversationId) {
+                    const activeConvo = convos.find(c => c._id === conversationId);
+                    if (activeConvo) {
+                        selectConversation(activeConvo);
+                    }
+                }
+            });
+            return () => socket.disconnect();
         }
-    }, [auth]);
+    }, [auth, conversationId]);
 
     const selectConversation = async (conversation) => {
         setActiveConversation(conversation);
@@ -49,15 +56,26 @@ const ChatPage = ({ auth }) => {
     };
 
     return (
-        <div className="row dashboard-layout" style={{ height: 'calc(100vh - 64px)' }}>
-            <div className="col s4 dashboard-nav">
-                <ConversationList conversations={conversations} onSelect={selectConversation} />
+        <div className="chat-page-layout">
+            <div className="chat-conversations">
+                <ConversationList 
+                    conversations={conversations}
+                    onSelect={selectConversation}
+                    activeConversationId={activeConversation?._id}
+                />
             </div>
-            <div className="col s8 dashboard-main">
+            <div className="chat-window">
                 {activeConversation ? (
-                    <ChatWindow messages={messages} onSendMessage={sendMessage} currentUser={auth} />
+                    <ChatWindow 
+                        messages={messages}
+                        onSendMessage={sendMessage}
+                        currentUser={auth}
+                    />
                 ) : (
-                    <div className="center-align"><h5>Select a conversation to start chatting</h5></div>
+                    <div className="center-align" style={{ paddingTop: '100px' }}>
+                        <h5>Select a conversation to start chatting</h5>
+                        <p>Click on a user in the sidebar to initiate a new chat.</p>
+                    </div>
                 )}
             </div>
         </div>
