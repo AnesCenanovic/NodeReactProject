@@ -272,3 +272,22 @@ nav.themed-header ul a:hover {
     justify-content: space-between; /* Pushes children to opposite ends */
     align-items: center; /* Vertically aligns them */
 }
+
+.chat-page-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr; /* A 300px left sidebar, and the rest for the main window */
+  height: calc(100vh - 64px); /* Full viewport height minus the header */
+  overflow: hidden;
+}
+
+/* Styles for the left column (conversation list) */
+.chat-conversations {
+  border-right: 1px solid var(--secondary-surface);
+  padding: 20px;
+  overflow-y: auto; /* Allow this column to scroll if there are many conversations */
+}
+
+/* The right column (chat window) will be handled by its own component's styles */
+.chat-window {
+  /* This will be the container for the ChatWindow component */
+}

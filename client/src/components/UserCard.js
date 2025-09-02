@@ -1,9 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { getIconForRole } from '../utils/iconHelper';
+import axios from 'axios';
 
 const UserCard = ({ user }) => {
+    const history = useHistory();
     if (!user) { return null; }
+    const handleStartChat = async () => {
+        try {
+            const res = await axios.post('/api/conversations', { otherUserId: user._id });
+            history.push('/chat');
+        } catch (err) {
+            console.error('Error starting conversation', err);
+        }
+    };
 
     return (
         <div className="themed-card" style={{ marginBottom: '10px' }}>
@@ -30,6 +40,7 @@ const UserCard = ({ user }) => {
                     </p>
                 </div>
             </Link>
+            <button onClick={handleStartChat} className="btn-small">Message</button>
         </div>
     );
 };

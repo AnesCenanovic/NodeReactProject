@@ -16,6 +16,7 @@
   "dependencies": {
     "concurrently": "^9.1.2",
     "cookie-session": "^2.1.0",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "materialize-css": "^1.0.0",
     "mongoose": "^8.15.0",

@@ -4,6 +4,7 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const keys = require('./config/keys');
 const http = require('http'); 
+const cors = require('cors');
 const socketio = require('socket.io'); 
 require('./models/User');
 require('./models/Post'); 
@@ -19,8 +20,13 @@ mongoose.connect(keys.mongoURI);
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
-
+const io = socketio(server, { 
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+});
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
