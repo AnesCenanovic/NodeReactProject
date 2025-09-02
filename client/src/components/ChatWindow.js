@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const ChatWindow = ({ messages, onSendMessage, currentUser }) => {
+const ChatWindow = ({ messages, onSendMessage, currentUser, participant }) => {
     const [newMessage, setNewMessage] = useState('');
     const messagesEndRef = useRef(null); // Ref to auto-scroll to the bottom
 
@@ -20,6 +20,15 @@ const ChatWindow = ({ messages, onSendMessage, currentUser }) => {
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <div 
+                className="themed-header" 
+                style={{ padding: '10px 20px', flexShrink: 0 }}
+            >
+                <h5 style={{ margin: 0 }}>
+                    {participant ? `Chat with ${participant.name}` : 'Conversation'}
+                </h5>
+            </div>
+
             <div style={{ flexGrow: 1, overflowY: 'auto', padding: '20px' }}>
                 {messages.map(msg => (
                     <div 
@@ -39,6 +48,9 @@ const ChatWindow = ({ messages, onSendMessage, currentUser }) => {
                             }}
                         >
                             {msg.content}
+                        </div>
+                        <div style={{ fontSize: '0.75rem', color: '#9e9e9e', margin: '2px 10px' }}>
+                            {new Date(msg.sentAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </div>
                     </div>
                 ))}

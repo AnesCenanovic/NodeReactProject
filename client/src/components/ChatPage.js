@@ -55,6 +55,10 @@ const ChatPage = ({ auth }) => {
         });
     };
 
+    const otherParticipant = activeConversation?.participants.find(
+                        p => p._id !== auth?._id
+                    );
+
     return (
         <div className="chat-page-layout">
             <div className="chat-conversations">
@@ -70,6 +74,7 @@ const ChatPage = ({ auth }) => {
                         messages={messages}
                         onSendMessage={sendMessage}
                         currentUser={auth}
+                        participant={otherParticipant}
                     />
                 ) : (
                     <div className="center-align" style={{ paddingTop: '100px' }}>
