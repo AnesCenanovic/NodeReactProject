@@ -1,4 +1,4 @@
-import { FETCH_SPECIALISTS, FETCH_SPECIALIST } from '../actions/types';
+import { FETCH_SPECIALISTS} from '../actions/types';
 
 export default function specialistsReducer(state = [], action) {
     switch (action.type) {

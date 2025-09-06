@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getIconForRole } from '../utils/iconHelper'; // Or a new getIconForForumType
 
-// You can create a getIconForForumType in iconHelper.js if you haven't already
+
 const getIconForForumType = (type) => {
     switch (type) {
         case 'workshop': return 'group';
