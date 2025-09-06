@@ -13,16 +13,19 @@ const Sidebar = ({ users, fetchUsers }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('all'); // 'all' is the default
 
-    // --- 4. THE FILTERING LOGIC ---
-    // We apply the filters before we map and render the cards.
+     if (!users) {
+        return <div>Loading users...</div>;
+    }
+
     const filteredUsers = users.filter(user => {
-        // Role filter logic
+
+        if (!user || !user.role || !user.name) {
+            return false; 
+        }
         const matchesRole = roleFilter === 'all' || user.role === roleFilter;
 
-        // Search term logic (case-insensitive)
         const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase());
         
-        // A user is shown only if they match BOTH the role and search filters
         return matchesRole && matchesSearch;
     });
 
@@ -50,7 +53,7 @@ const Sidebar = ({ users, fetchUsers }) => {
 };
 
 const mapStateToProps = ({ users }) => {
-    return { users };
+    return { users: users };
 };
 
 export default connect(mapStateToProps, { fetchUsers })(Sidebar);
