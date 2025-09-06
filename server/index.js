@@ -43,7 +43,7 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/userRoutes')(app); 
-require('./routes/postRoutes.js')(app);
+require('./routes/postRoutes')(app);
 require('./routes/forumRoutes')(app);
 require('./routes/specialistRoutes')(app);
 require('./routes/inboxRoutes')(app);
