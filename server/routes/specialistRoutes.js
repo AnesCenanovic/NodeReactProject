@@ -12,9 +12,21 @@ module.exports = app => {
     });
 
     app.get('/api/specialists/:id', async (req, res) => {
-        const specialist = await Specialist.findById(req.params.id);
-        const reviews = await Review.find({ _specialist: req.params.id });
-        res.send(specialist, reviews);
+        try {
+            const [specialist, reviews] = await Promise.all([
+                Specialist.findById(req.params.id),
+                Review.find({ _specialist: req.params.id }).sort({ createdAt: -1 })
+            ]);
+            console.log('Fetched specialist:', specialist);
+            console.log('Fetched reviews:', reviews);
+            if (specialist) {
+                res.send({ specialist, reviews });
+            } else {
+                res.status(404).send({ error: 'Specialist not found' });
+            }
+        } catch (err) {
+            res.status(422).send(err);
+        }
     });
 
     app.post('/api/specialists', requireLogin, requireAdmin, async (req, res) => {

@@ -31,7 +31,7 @@ render() {
             <BrowserRouter>
                 <div className="app-container">
                     <Header />
-                    <div style={{ marginRight: 0 }}> 
+                    <div className='page-content'> 
                         <Switch>
                             <Route exact path="/" component={Landing} />
                             <Route exact path="/surveys" component={Dashboard} />

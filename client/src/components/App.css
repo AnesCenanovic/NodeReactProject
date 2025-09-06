@@ -23,6 +23,13 @@ body {
     font-family: var(--font-body);
 }
 
+.page-content {
+    /* We calculate the height to be the full screen minus the header */
+    height: calc(100vh - 64px); 
+    /* This is the key: this container will scroll for content pages */
+    overflow-y: auto; 
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     font-weight: 700;
@@ -30,12 +37,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .dashboard-layout {
   display: grid;
-
   grid-template-columns: 220px 1fr 280px;
-  grid-template-rows: 1fr; /* Take up all available height */
-  height: calc(100vh - 64px); /* Full viewport height minus the header height */
+  grid-template-rows: 1fr;
+  height: 100%; /* Make it fill its parent, the new page-content div */
   gap: 24px;
   padding: 24px;
+  /* We remove overflow: hidden from the sub-elements of the dashboard */
 }
 
 .dashboard-nav {
@@ -345,4 +352,87 @@ nav.themed-header ul a:hover {
     margin-top: 16px;
     border-top: 1px solid var(--secondary-surface);
     padding-top: 16px;
+}
+
+.reviews-section h4 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.review-card {
+    background-color: var(--bg-dark); /* Use our darkest background */
+    border: 1px solid var(--secondary-surface);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+    position: relative; /* For positioning the author text */
+}
+
+.review-card p {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.review-card .rating {
+    font-size: 1.2rem;
+    color: #ffc107; /* A nice gold color for the stars */
+    margin-bottom: 10px;
+}
+
+.review-card .review-author {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    text-align: right;
+    margin-top: 15px;
+}
+
+.info-card {
+    background-color: var(--primary-surface);
+    border: 1px solid var(--secondary-surface);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    text-decoration: none;
+    color: var(--text-primary);
+    display: block; /* Make the whole card a block-level link */
+    transition: all 0.2s ease-in-out;
+}
+
+.info-card:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* A header section for the icon, name, and specialty */
+.info-card-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--secondary-surface);
+}
+
+.info-card-icon {
+    font-size: 48px !important;
+    color: var(--accent-color);
+    margin-right: 20px;
+}
+
+.info-card-header h5 {
+    margin: 0;
+    font-family: var(--font-heading);
+}
+
+.info-card-header p {
+    margin: 0;
+    color: var(--accent-color);
+}
+
+/* A body section for the detailed info */
+.info-card-body {
+    padding: 20px;
+}
+
+.info-card-body strong {
+    color: var(--accent-color);
 }

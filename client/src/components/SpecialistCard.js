@@ -3,20 +3,36 @@ import { Link } from 'react-router-dom';
 import { getIconForSpecialty } from '../utils/iconHelper'; 
 
 const SpecialistCard = ({ specialist }) => {
+    if (!specialist || !specialist._id) {
+        return null;
+    }
+
     return (
-        <div className="themed-card">
-            <div className="card-content center-align">
-                <i className="material-icons" style={{ fontSize: '80px', margin: '20px 0' }}>
+        // The entire card is a link, using our new style
+        <Link to={`/specialists/${specialist._id}`} className="info-card">
+            
+            <div className="info-card-header">
+                <i className="material-icons info-card-icon">
                     {getIconForSpecialty(specialist.specialty)}
                 </i>
-                <span className="card-title" style={{ display: 'block', fontWeight: 'bold' }}>{specialist.name}</span>
-                <p><strong>{specialist.specialty}</strong></p>
-                <p style={{ marginTop: '10px' }}>{specialist.shortBio}</p>
+                <div>
+                    <h5>{specialist.name}</h5>
+                    <p>{specialist.specialty}</p>
+                </div>
             </div>
-            <div className="card-action">
-                <Link to={`/specialists/${specialist._id}`}>View Full Profile</Link>
+            
+            <div className="info-card-body">
+                <p><strong>About:</strong> {specialist.shortBio}</p>
+                
+                {/* We can add contact info directly to the card */}
+                <div style={{ marginTop: '15px' }}>
+                    <p><strong>Email:</strong> {specialist.contactEmail || 'Not provided'}</p>
+                    <p><strong>Phone:</strong> {specialist.contactPhone || 'Not provided'}</p>
+                </div>
             </div>
-        </div>
+
+        </Link>
     );
 };
+
 export default SpecialistCard;
