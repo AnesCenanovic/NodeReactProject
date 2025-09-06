@@ -20,39 +20,60 @@ const PostCard = ({ post, auth, likePost }) => {
     };
 
     return (
-        <div className="card blue-grey darken-1">
-            <div className="card-content white-text">
-                <span className="card-title">
-                    {post._id && <i className="material-icons left">{getIconForPostType(post._id)}</i>}
-                    {post.title}
-                </span>
+        // The main container with our flexbox layout class
+        <div className="icon-card" key={post._id}>
+            
+            {/* The Icon on the left */}
+            <i className="material-icons icon-card-icon">
+                {getIconForPostType(post.type)}
+            </i>
 
-                {<p><strong>{post.type}</strong> </p> }
-                {post.content && <p>{post.content.substring(0, 150)}...</p>}
-            </div>
+            {/* The main content container on the right */}
+            <div className="icon-card-content">
+                
+                {/* Post Type (e.g., "Article") */}
+                <div className="card-subtitle">{post.type.charAt(0).toUpperCase() + post.type.slice(1)}</div>
+                
+                {/* Post Title */}
+                <h5 className="card-title">{post.title}</h5>
 
-            <div className="card-action card-action-flex">
-                <Link to={`/posts/${post._id}`}>Read More</Link>
+                {/* Post Content Preview */}
+                <p className="card-preview">
+                    {post.content && `${post.content.substring(0, 150)}...`}
+                </p>
 
-                <div className="right-align"> 
-                    <p className="grey-text text-lighten-1" style={{ fontStyle: 'italic', margin: '0 15px 0 0', display: 'inline-block' }}>
-                        By: {post.authorName}
-                    </p>
-                    <button 
-                        onClick={handleLike} 
-                        className={`btn-flat ${userHasLiked ? 'teal-text text-lighten-2' : 'white-text'}`}
-                        disabled={!auth}
-                        style={{ display: 'inline-flex', alignItems: 'center', padding: '0 10px' }} // Tighter style
-                    >
-                        <i className="material-icons" style={{ fontSize: '1.2rem' }}>thumb_up</i>
-                        <span style={{ marginLeft: '8px' }}>{post.likes ? post.likes.length : 0}</span>
-                        <span style={{ marginLeft: '15px', color: '#ccc', display: 'inline-flex', alignItems: 'center' }}>
-                        <i className="material-icons" style={{ fontSize: '1.2rem', marginRight: '4px' }}>comment</i>
-                        {/* Display the count from the post object */}
-                        {post.commentCount}
-                    </span>
-                </button>
-            </div>
+                {/* The Action Bar at the bottom */}
+                <div className="icon-card-action">
+                    
+                    {/* Left side of the action bar */}
+                    <div>
+                        <Link to={`/posts/${post._id}`}>Read More</Link>
+                    </div>
+
+                    {/* Right side of the action bar */}
+                    <div className="right-align">
+                        <span style={{ marginRight: '15px', fontStyle: 'italic', color: 'var(--accent-color)'}}>
+                            By: {post.authorName}
+                        </span>
+                        
+                        {/* Like Button */}
+                        <button 
+                            onClick={handleLike} 
+                            className={`btn-flat ${userHasLiked ? 'teal-text text-lighten-2' : 'white-text'}`}
+                            disabled={!auth}
+                            style={{ display: 'inline-flex', alignItems: 'center', padding: '0 8px' }}
+                        >
+                            <i className="material-icons" style={{ fontSize: '1.2rem' }}>thumb_up</i>
+                            <span style={{ marginLeft: '8px' }}>{post.likes ? post.likes.length : 0}</span>
+                        </button>
+
+                        {/* Comment Count */}
+                        <span style={{ marginLeft: '10px', color: '#ccc', display: 'inline-flex', alignItems: 'center' }}>
+                            <i className="material-icons" style={{ fontSize: '1.2rem', marginRight: '4px' }}>comment</i>
+                            {post.commentCount}
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     );

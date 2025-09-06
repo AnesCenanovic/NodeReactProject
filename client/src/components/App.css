@@ -291,3 +291,58 @@ nav.themed-header ul a:hover {
 .chat-window {
   /* This will be the container for the ChatWindow component */
 }
+
+.icon-card {
+    background-color: var(--primary-surface);
+    border: 1px solid var(--secondary-surface);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease-in-out;
+    display: flex; /* This is the key to the side-by-side layout */
+    align-items: center; /* Vertically aligns the icon and content */
+    padding: 24px;
+}
+
+.icon-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Styling for the icon on the left */
+.icon-card-icon {
+    font-size: 64px !important; /* Make the icon much larger */
+    color: var(--accent-color);
+    margin-right: 24px; /* Space between the icon and the content */
+}
+
+/* A container for all the text content on the right */
+.icon-card-content {
+    flex-grow: 1; /* Allows the content to take up all remaining space */
+}
+
+.icon-card-content .card-title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem; /* Make the title significantly larger */
+    margin: 0 0 8px 0; /* Adjust spacing */
+}
+
+.icon-card-content .card-subtitle {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 12px;
+}
+
+.icon-card-content .card-preview {
+    margin-bottom: 16px;
+}
+
+.icon-card-action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    border-top: 1px solid var(--secondary-surface);
+    padding-top: 16px;
+}
