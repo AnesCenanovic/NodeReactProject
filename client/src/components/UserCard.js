@@ -5,42 +5,42 @@ import axios from 'axios';
 
 const UserCard = ({ user }) => {
     const history = useHistory();
+
     if (!user) { return null; }
+
     const handleStartChat = async () => {
         try {
             const res = await axios.post('/api/conversations', { otherUserId: user._id });
-            history.push('/chat');
+            const conversation = res.data;
+            history.push(`/chat/${conversation._id}`);
         } catch (err) {
             console.error('Error starting conversation', err);
         }
     };
 
     return (
-        <div className="themed-card" style={{ marginBottom: '10px' }}>
-            <Link to={`/profile/${user._id}`} className="card-content" style={{ padding: '12px', display: 'block', color: 'inherit' }}>
-                <i 
-                    className="material-icons circle" 
-                    style={{ 
-                        fontSize: '20px', 
-                        padding: '8px',
-                        backgroundColor: '#f5f5f5',
-                        color: '#424242',
-                        float: 'left', 
-                        marginRight: '12px' 
-                    }}
-                >
-                    {getIconForRole(user.role)}
-                </i>
-                <div style={{ overflow: 'hidden' }}>
-                    <span className="card-title" style={{ fontSize: '1rem', lineHeight: '1.2rem', fontWeight: 500 }}>
-                        {user.name}
-                    </span>
-                    <p style={{ fontSize: '0.8rem', color: '#9e9e9e' }}>
-                        {user.role}
-                    </p>
-                </div>
-            </Link>
-            <button onClick={handleStartChat} className="btn-small">Message</button>
+        <div className="themed-card" style={{ display: 'flex', alignItems: 'center', padding: '16px', marginBottom: '15px' }}>
+            
+            <i className="material-icons circle" style={{ color: 'var(--accent-color)', backgroundColor: 'var(--primary-surface)' }}>
+                {getIconForRole(user.role)}
+            </i>
+            <div style={{ marginLeft: '16px', flexGrow: 1 }}>
+                <span style={{ fontWeight: 'bold', display: 'block' }}>
+                    {user.name}
+                </span>
+                <span style={{ fontSize: '0.9rem', color: 'var(--accent-color)' }}>
+                    {user.role}
+                </span>
+            </div>
+            
+            <div className="card-actions">
+                <Link to={`/profile/${user._id}`} className="btn-floating btn-small waves-effect waves-light" style={{ backgroundColor: 'var(--secondary-surface)', marginRight: '8px' }} title="View Profile">
+                    <i className="material-icons">person</i>
+                </Link>
+                <button onClick={handleStartChat} className="btn-floating btn-small waves-effect waves-light blue" title="Message User">
+                    <i className="material-icons">message</i>
+                </button>
+            </div>
         </div>
     );
 };
