@@ -103,17 +103,93 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 9999 !important;
 }
 
+.landing-page {
+    /* No special layout needed, it's a standard top-to-bottom page */
+}
+
+/* 1. The "Hero" Section (the big intro) */
 .hero-section {
-    padding: 40px 20px;
-    margin-bottom: 30px;
+    min-height: calc(100vh - 64px); /* Full screen height minus the header */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--secondary-surface), var(--primary-surface));
+    padding: 20px;
+    background: linear-gradient(135deg, var(--bg-dark), var(--primary-surface));
 }
 
 .hero-section h1 {
-    font-size: 2.5rem;
+    font-family: var(--font-heading);
+    font-size: 4rem; /* Big, impactful title */
     margin: 0;
+    line-height: 1.2;
+}
+
+.hero-section .brand-highlight {
+    color: var(--accent-color);
+}
+
+.hero-section p.subtitle {
+    font-size: 1.5rem;
+    max-width: 700px;
+    color: var(--accent-color);
+    margin: 20px 0 30px 0;
+}
+
+/* Style for the main Call to Action button */
+.hero-section .cta-button {
+    background-color: #00bcd4; /* A bright, contrasting cyan */
+    color: var(--bg-dark) !important;
+    font-weight: bold;
+    padding: 0 40px;
+    border-radius: 30px; /* Pill shape */
+    height: 60px;
+    line-height: 60px;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.hero-section .cta-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 188, 212, 0.3);
+}
+
+/* 2. The Features Section */
+.features-section {
+    padding: 80px 20px;
+    background-color: var(--bg-dark);
+}
+
+.features-section h2 {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.feature-item {
+    background-color: var(--primary-surface);
+    border: 1px solid var(--secondary-surface);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.feature-item i {
+    font-size: 50px;
+    color: var(--accent-color);
+}
+
+.feature-item h5 {
+    font-family: var(--font-heading);
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 nav.themed-header {

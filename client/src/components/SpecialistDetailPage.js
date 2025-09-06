@@ -21,23 +21,24 @@ const ReviewForm = ({ specialistId, onReviewSubmit }) => {
     };
 
     return (
-        <div className="themed-form-container">
-            <h5>Leave a Review</h5>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Rating: {rating} ★</label>
-                    <p className="range-field">
-                        <input type="range" min="1" max="5" value={rating} onChange={e => setRating(e.target.value)} />
-                    </p>
-                </div>
-                <div className="input-field">
-                    <textarea id="comment" className="materialize-textarea" value={comment} onChange={e => setComment(e.target.value)}></textarea>
-                    <label htmlFor="comment">Your experience...</label>
-                </div>
-                <button type="submit" className="btn green">Submit Review</button>
-            </form>
-        </div>
-    );
+            // We use our themed form container for consistent styling
+            <div className="themed-form-container">
+                <h5>Leave a Review</h5>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Rating: {rating} ★</label>
+                        <p className="range-field">
+                            <input type="range" min="1" max="5" value={rating} onChange={e => setRating(e.target.value)} />
+                        </p>
+                    </div>
+                    <div className="input-field">
+                        <textarea id="comment" className="materialize-textarea" value={comment} onChange={e => setComment(e.target.value)} required></textarea>
+                        <label htmlFor="comment">Your experience...</label>
+                    </div>
+                    <button type="submit" className="btn green">Submit Review</button>
+                </form>
+            </div>
+        );
 };
 
 

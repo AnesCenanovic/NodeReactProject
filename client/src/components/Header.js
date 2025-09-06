@@ -31,7 +31,7 @@ const Header = (props) => {
         <nav className="themed-header">
             <div className="nav-wrapper">
                 <Link to={props.auth ? '/surveys' : '/'} className="brand-logo left" style={{ marginLeft: '10px' }}>
-                    IncludeEd
+                    IncluEd
                 </Link>
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
                     {renderContent()}

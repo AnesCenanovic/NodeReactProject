@@ -17,8 +17,6 @@ module.exports = app => {
                 Specialist.findById(req.params.id),
                 Review.find({ _specialist: req.params.id }).sort({ createdAt: -1 })
             ]);
-            console.log('Fetched specialist:', specialist);
-            console.log('Fetched reviews:', reviews);
             if (specialist) {
                 res.send({ specialist, reviews });
             } else {
