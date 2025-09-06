@@ -77,7 +77,7 @@ const PostCreate = (props) => {
                     </select>
                 </div>
 
-                <Link to="/dashboard" className="btn-flat red white-text">
+                <Link to="/surveys" className="btn-flat red white-text">
                     Cancel
                 </Link>
 

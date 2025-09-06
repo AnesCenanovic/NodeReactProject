@@ -10,10 +10,10 @@ module.exports = app => {
         try {
             const [forums, posts, reviews] = await Promise.all([
                 // 1. Find all forums the user is a member of
-                Forum.find({ members: req.user.id }, 'title createdAt'),
+                Forum.find({ members: req.user.id }, 'title createdAt description type'),
 
                 // 2. Find all posts the user has created
-                Post.find({ _user: req.user.id }, 'title createdAt content authorName'),
+                Post.find({ _user: req.user.id }, 'title createdAt content authorName type likes commentCount'),
 
                 // 3. Find all reviews the user has written
                 Review.find({ _author: req.user.id }, 'comment rating createdAt')
