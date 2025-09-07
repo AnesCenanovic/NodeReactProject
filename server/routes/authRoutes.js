@@ -14,7 +14,7 @@ module.exports = (app) =>{
         passport.authenticate('google'),
         (req, res) => {
             // Successful authentication, redirect home.
-            res.redirect('http://localhost:3000/surveys'); // Redirect to the home page after login
+            res.redirect('/surveys'); // Redirect to the home page after login
         }
     );
 
