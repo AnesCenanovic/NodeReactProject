@@ -22,6 +22,7 @@ const Conversation = mongoose.model('conversations');
 mongoose.connect(keys.mongoURI);
 
 const app = express();
+app.enable('trust proxy');
 const server = http.createServer(app);
 const io = socketio(server, { 
     cors: {
