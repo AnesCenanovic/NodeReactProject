@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const AWS = require('aws-sdk');
 const { v1: uuidv1 } = require('uuid'); 
-const requireLogin = require('../middlewares/requireLogin');
+const requireLogin = require('../services/requireLogin');
 const keys = require('../config/keys');
 
 const File = mongoose.model('files');

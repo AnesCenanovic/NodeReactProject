@@ -51,7 +51,7 @@ const FileManagerPage = ({ users }) => { // We get all users from Redux for the 
     
     const handleShare = async (e) => {
         e.preventDefault();
-        await axios.post(`/api/files/${selectedFile._id}/share`, { userIdToShareWith });
+        await axios.post(`/api/files/${selectedFile._id}/share`, { userToShareWith });
         alert('File shared successfully!');
         setShareModalOpen(false);
     };
