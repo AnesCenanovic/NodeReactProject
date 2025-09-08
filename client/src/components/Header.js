@@ -21,6 +21,8 @@ const Header = (props) => {
                     <>  
                         <li><Link to="/specialists">Specialists</Link></li>
                         <li><Link to="/profile">Profile</Link></li>
+                        <li><Link to="/files">File Share</Link></li>
+                        <li><Link to="/inbox">My Activity</Link></li>
                         <li><a href="/api/logout">Logout</a></li>
                     </>
                 );

@@ -15,6 +15,7 @@ require('./models/Review');
 require('./models/Comment');
 require('./models/Message');
 require('./models/Conversation');
+require('./models/File');
 
 const Message = mongoose.model('messages');
 const Conversation = mongoose.model('conversations');
@@ -50,6 +51,7 @@ require('./routes/specialistRoutes')(app);
 require('./routes/inboxRoutes')(app);
 require('./routes/commentRoutes')(app);
 require('./routes/chatRoutes')(app);
+require('./routes/fileRoutes')(app);
 
 io.on('connection', socket => {
     console.log('A new user connected via WebSocket:', socket.id);

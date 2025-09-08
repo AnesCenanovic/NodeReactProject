@@ -1,4 +1,5 @@
 const passport = require('passport');
+const keys = require('../config/keys');
 
 module.exports = (app) =>{
     app.get(
@@ -14,7 +15,7 @@ module.exports = (app) =>{
         passport.authenticate('google'),
         (req, res) => {
             // Successful authentication, redirect home.
-            res.redirect('/surveys'); // Redirect to the home page after login
+            res.redirect(keys.clientURL + '/surveys'); // Redirect to the home page after login
         }
     );
 
