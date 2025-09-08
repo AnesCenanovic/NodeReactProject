@@ -17,6 +17,7 @@ import InboxPage from './InboxPage';
 import ProfileEditPage from './ProfileEditPage';
 import ChatPage from './ChatPage';
 import FileManagerPage from './FileManagerPage';
+import AdminFileArchive from './AdminFileArchive';
 import './App.css';
 
 const SurveyNew = () => (
@@ -51,6 +52,7 @@ render() {
                             <Route exact path="/chat/:conversationId?" component={ChatPage} />
                             <Route exact path="/profile/edit/:userId" component={ProfileEditPage} />
                             <Route exact path="/files" component={FileManagerPage} />
+                            <Route exact path="/admin/files" component={AdminFileArchive} />
                         </Switch>
                     </div>
                     </div>

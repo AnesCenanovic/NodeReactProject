@@ -512,3 +512,57 @@ nav.themed-header ul a:hover {
 .info-card-body strong {
     color: var(--accent-color);
 }
+
+.file-grid {
+    display: grid;
+    /* Create a responsive grid that makes as many 300px columns as will fit */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+}
+
+.file-card {
+    background-color: var(--primary-surface);
+    border: 1px solid var(--secondary-surface);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: space-between; /* Pushes action bar to the bottom */
+}
+
+.file-card-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.file-card-icon {
+    font-size: 48px !important;
+    color: var(--accent-color);
+    margin-right: 16px;
+}
+
+.file-card-details {
+    overflow: hidden; /* Prevents long filenames from breaking the layout */
+}
+
+.file-card-details .file-name {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds "..." to long filenames */
+}
+
+.file-card-details .file-type {
+    font-size: 0.9rem;
+    color: var(--accent-color);
+}
+
+.file-card-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px;
+    border-top: 1px solid var(--secondary-surface);
+    padding-top: 15px;
+}

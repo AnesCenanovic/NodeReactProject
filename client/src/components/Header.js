@@ -21,6 +21,9 @@ const Header = (props) => {
                     <>  
                         <li><Link to="/specialists">Specialists</Link></li>
                         <li><Link to="/profile">Profile</Link></li>
+                        {props.auth && props.auth.role === 'admin' && (
+            <li><Link to="/admin/files">File Archive</Link></li>
+        )}
                         <li><Link to="/files">File Share</Link></li>
                         <li><Link to="/inbox">My Activity</Link></li>
                         <li><a href="/api/logout">Logout</a></li>

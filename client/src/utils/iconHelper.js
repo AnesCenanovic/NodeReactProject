@@ -41,3 +41,11 @@ export const getIconForPostType = (type) => {
         default: return 'description';
     }
 };
+
+export const getIconForFileType = (fileType = '') => {
+    if (fileType.startsWith('image/')) return 'image';
+    if (fileType.startsWith('video/')) return 'movie';
+    if (fileType === 'application/pdf') return 'picture_as_pdf';
+    if (fileType.includes('document') || fileType.includes('word')) return 'article';
+    return 'attachment';
+};

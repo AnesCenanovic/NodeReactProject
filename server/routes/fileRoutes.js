@@ -3,28 +3,37 @@ const mongoose = require('mongoose');
 const AWS = require('aws-sdk');
 const { v1: uuidv1 } = require('uuid'); 
 const requireLogin = require('../services/requireLogin');
+const requireAdmin = require('../services/requireAdmin');
 const keys = require('../config/keys');
 
 const File = mongoose.model('files');
 
 const s3 = new AWS.S3({
-    endpoint: keys.r2Endpoint,
+    endpoint: keys.r2Endpoint, 
     accessKeyId: keys.r2AccessKeyId,
     secretAccessKey: keys.r2SecretAccessKey,
     signatureVersion: 'v4',
     region: 'auto',
 });
 
+
 module.exports = app => {
     app.get('/api/upload/file', requireLogin, (req, res) => {
         const { fileType } = req.query;
-        const key = `${req.user.id}/${uuidv1()}`; 
+        const key = `${req.user.id}/${uuidv1()}`;
 
         s3.getSignedUrl('putObject', {
             Bucket: keys.r2BucketName,
             ContentType: fileType,
-            Key: key
-        }, (err, url) => res.send({ key, url }));
+            Key: key,
+            Expires: 60 * 5 // 5 minutes
+        }, (err, url) => {
+            if (err) {
+                console.error("Error generating presigned URL:", err);
+                return res.status(500).send({ error: "Failed to prepare upload." });
+            }
+            res.send({ key, url });
+        });
     });
 
     app.post('/api/files', requireLogin, async (req, res) => {
@@ -74,5 +83,32 @@ module.exports = app => {
             _uploader: { $ne: req.user.id }
         }).sort({ uploadedAt: -1 });
         res.send(files);
+    });
+
+    app.delete('/api/files/:fileId', requireLogin, async (req, res) => {
+        try {
+            const file = await File.findById(req.params.fileId);
+
+            if (!file) {
+                return res.status(404).send({ error: 'File not found.' });
+            }
+
+            if (file._uploader.toString() !== req.user.id.toString() && req.user.role !== 'admin') {
+                return res.status(403).send({ error: 'You do not have permission to delete this file.' });
+            }
+
+            await File.findByIdAndDelete(req.params.fileId);
+
+            res.send({ message: 'File deleted successfully.' });
+
+        } catch (err) {
+            res.status(422).send(err);
+        }
+    });
+    app.get('/api/files/all', requireLogin, requireAdmin, async (req, res) => {
+        const allFiles = await File.find({})
+            .populate('_uploader', 'name')
+            .sort({ uploadedAt: -1 });
+        res.send(allFiles);
     });
 };
