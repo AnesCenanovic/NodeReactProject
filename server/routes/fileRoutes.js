@@ -60,17 +60,42 @@ module.exports = app => {
     });
 
     app.post('/api/files/:fileId/share', requireLogin, async (req, res) => {
-        const { userIdToShareWith } = req.body;
-        const file = await File.findById(req.params.fileId);
+        console.log('BACKEND: Received request body:', req.body);
+        const { userToShareWith } = req.body;
 
-        if (file._uploader.toString() !== req.user.id.toString()) {
-            return res.status(403).send({ error: 'Only the owner can share this file.' });
+        try {
+            const file = await File.findById(req.params.fileId);
+
+            if (!file) {
+                return res.status(404).send({ error: 'File not found.' });
+            }
+
+            if (file._uploader.toString() !== req.user.id.toString() && req.user.role !== 'admin') {
+                return res.status(403).send({ error: 'Permission denied.' });
+            }
+
+            const sharedWithStringIds = file.sharedWith.map(id => id.toString());
+            console.log('Current members (as strings):', sharedWithStringIds);
+
+            const isAlreadyShared = sharedWithStringIds.includes(userToShareWith);
+            console.log(`Is file already shared with ${userToShareWith}?`, isAlreadyShared);
+
+            let updatedFile = file;
+
+            if (userToShareWith && !isAlreadyShared) {
+                file.sharedWith.push(userToShareWith);
+                updatedFile = await file.save(); 
+                console.log('SUCCESS: User added. New members:', updatedFile.sharedWith);
+            } else {
+                console.log('INFO: User was already a member or invalid. No changes made.');
+            }
+            
+            res.send(updatedFile);
+
+        } catch (err) {
+            console.error("Error during share operation:", err);
+            res.status(500).send({ error: 'An error occurred while sharing the file.' });
         }
-        if (!file.sharedWith.includes(userIdToShareWith)) {
-            file.sharedWith.push(userIdToShareWith);
-            await file.save();
-        }
-        res.send(file);
     });
 
     app.get('/api/files/my_files', requireLogin, async (req, res) => {
