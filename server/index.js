@@ -27,11 +27,11 @@ app.enable('trust proxy');
 const server = http.createServer(app);
 const io = socketio(server, { 
     cors: {
-        origin: "http://localhost:3000",
+        origin: keys.clientURL,
         methods: ["GET", "POST"]
     }
 });
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: keys.clientURL }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(

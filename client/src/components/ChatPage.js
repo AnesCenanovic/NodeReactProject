@@ -16,7 +16,7 @@ const ChatPage = ({ auth }) => {
 
     useEffect(() => {
         if (auth) {
-            socket = io('http://localhost:5000');
+            socket = io();
             socket.on('receive_message', (newMessage) => {
                 setActiveConversation(currentActiveConvo => {
                     if (currentActiveConvo && currentActiveConvo._id === newMessage._conversation) {
