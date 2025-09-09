@@ -28,8 +28,8 @@ const server = http.createServer(app);
 const io = socketio(server, { 
     cors: {
         origin: keys.clientURL,
-        methods: ["GET", "POST"]
-    }
+        methods: ["GET", "POST"],
+    },
 });
 app.use(cors({ origin: keys.clientURL }));
 app.use(express.json());
@@ -63,7 +63,7 @@ io.on('connection', socket => {
 
     socket.on('send_message', async (data) => {
         const { conversationId, senderId, senderName, content } = data;
-
+        console.log('BACKEND: Received "send_message" event with data:', data);
         const message = new Message({
             _conversation: conversationId,
             _sender: senderId,
@@ -73,7 +73,7 @@ io.on('connection', socket => {
         await message.save();
 
         await Conversation.findByIdAndUpdate(conversationId, { lastMessageAt: Date.now() });
-
+        console.log('BACKEND: Broadcasting "receive_message" to room:', conversationId);
         io.to(conversationId).emit('receive_message', message);
     });
 

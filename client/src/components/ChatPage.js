@@ -8,6 +8,11 @@ import ChatWindow from './ChatWindow';
 
 let socket;
 
+const SOCKET_URL = process.env.NODE_ENV === 'production' 
+    ? '' 
+    : 'http://localhost:5000'; 
+
+
 const ChatPage = ({ auth }) => {
     const { conversationId } = useParams();
     const [conversations, setConversations] = useState([]);
@@ -16,8 +21,9 @@ const ChatPage = ({ auth }) => {
 
     useEffect(() => {
         if (auth) {
-            socket = io();
+            socket = io(SOCKET_URL);
             socket.on('receive_message', (newMessage) => {
+                console.log('FRONTEND: Received "receive_message" event with data:', newMessage);
                 setActiveConversation(currentActiveConvo => {
                     if (currentActiveConvo && currentActiveConvo._id === newMessage._conversation) {
                         setMessages(prevMessages => [...prevMessages, newMessage]);
@@ -47,6 +53,13 @@ const ChatPage = ({ auth }) => {
     };
 
     const sendMessage = (content) => {
+        const messageData = {
+            conversationId: activeConversation._id,
+            senderId: auth._id,
+            senderName: auth.name,
+            content
+        };
+        console.log('FRONTEND: Emitting "send_message" event with data:', messageData);
         socket.emit('send_message', {
             conversationId: activeConversation._id,
             senderId: auth._id,
