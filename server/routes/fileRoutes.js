@@ -19,6 +19,10 @@ const s3 = new AWS.S3({
 
 module.exports = app => {
     app.get('/api/upload/file', requireLogin, (req, res) => {
+        console.log('R2 Bucket Name:', keys.r2BucketName);
+        console.log('R2 Endpoint:', keys.r2Endpoint);
+        console.log('R2 Access Key:', keys.r2AccessKeyId);
+        console.log('R2 Secret Key:', keys.r2SecretAccessKey);
         const { fileType } = req.query;
         const key = `${req.user.id}/${uuidv1()}`;
 
@@ -37,10 +41,6 @@ module.exports = app => {
     });
 
     app.post('/api/files', requireLogin, async (req, res) => {
-        console.log('R2 Bucket Name:', keys.r2BucketName);
-        console.log('R2 Endpoint:', keys.r2Endpoint);
-        console.log('R2 Access Key:', keys.r2AccessKeyId);
-        console.log('R2 Secret Key:', keys.r2SecretAccessKey);
         const { originalName, s3Key, fileType } = req.body;
         const file = new File({
             originalName, s3Key, fileType,
