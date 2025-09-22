@@ -78,11 +78,21 @@ const PostDetail = ({ auth, deletePost, addComment }) => {
                     </p>
                 </div>
                 <div className="card-action">
-                    {post.links.map((link, index) => (
-                        <a key={index} href={link} target="_blank" rel="noopener noreferrer">
-                            Link {index + 1}
-                        </a>
-                    ))}
+                    {post.links && post.links.map((link, index) => {
+                        const hasProtocol = link.startsWith('http://') || link.startsWith('https://');
+                        const fullUrl = hasProtocol ? link : `https://${link}`;
+
+                        return (
+                            <a 
+                                key={index} 
+                                href={fullUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                            >
+                                Link {index + 1}
+                            </a>
+                        );
+                    })}
                     {auth && auth.role === 'admin' && (
                         <div className="right">
                             <Link 
